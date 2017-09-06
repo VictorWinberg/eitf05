@@ -1,6 +1,9 @@
+<?php include 'env.php' ?>
+<?php require 'utility.php' ?>
+<style>
+  <?php include 'index.css' ?>
+</style>
 <?php
-include 'env.php';
-require 'utility.php';
 
 $url = parse_url(getenv('CLEARDB_DATABASE_URL'));
 
@@ -19,8 +22,8 @@ function show_table($conn, $sql, $name) {
   debug($columns);
 
   if(mysqli_num_rows($columns)) {
-    echo '<h4>' . $name . '</h4>';
     echo '<table>';
+    echo '<caption>' . $name . '</caption>';
 
     echo '<tr>';
     while ($field = $columns->fetch_field()) {
@@ -38,7 +41,7 @@ function show_table($conn, $sql, $name) {
 
     echo '</table>';
   } else {
-    echo '<h4>' . $name . ' is empty.</h4>';
+    echo '<p>' . $name . ' is empty.</p>';
   }
 }
 ?>
@@ -60,6 +63,7 @@ function show_table($conn, $sql, $name) {
         debug('TABLE: ' . $table);
         echo '<h3>' . $table . '</h3>';
         show_table($conn, 'SHOW COLUMNS from ' . $table, 'Description');
+        echo '<br/>';
         show_table($conn, 'SELECT * from ' . $table, 'Data');
         echo '<br/>';
       }

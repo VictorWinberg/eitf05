@@ -1,0 +1,8 @@
+td, th {
+  text-align: left;
+  padding: 0.5em;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
