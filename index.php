@@ -21,20 +21,21 @@ function show_table($conn, $sql, $name) {
   if(mysqli_num_rows($columns)) {
     echo '<h4>' . $name . '</h4>';
     echo '<table>';
+
     echo '<tr>';
-    foreach ($columns->fetch_fields() as $field) {
+    while ($field = $columns->fetch_field()) {
       echo '<th>' . $field->name . '</th>';
     }
     echo '</tr>';
+
     while($row = $columns->fetch_row()) {
       echo '<tr>';
-
       foreach ($row as $key => $value) {
         echo '<td>' . $value . '</td>';
       }
-
       echo '</tr>';
     }
+
     echo '</table>';
   } else {
     echo '<h4>' . $name . ' is empty.</h4>';
@@ -53,11 +54,12 @@ function show_table($conn, $sql, $name) {
     <?php
       $tables = $conn->query('SHOW TABLES');
       debug($tables);
-      while($table = mysqli_fetch_row($tables)[0]) {
+      while($table = $tables->fetch_row()[0]) {
         debug('TABLE: ' . $table);
         echo '<h3>' . $table . '</h3>';
         show_table($conn, 'SHOW COLUMNS from ' . $table, 'Description');
         show_table($conn, 'SELECT * from ' . $table, 'Data');
+        echo '<br/>';
       }
     ?>
   </body>
