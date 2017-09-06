@@ -46,6 +46,8 @@ function show_table($conn, $sql, $name) {
 <html>
   <head>
     <title>W3bShopAtt4ckzz</title>
+    <?php $icons = ['terminal', 'death']; $icon = $icons[array_rand($icons)]; ?>
+    <link rel='icon' type='image/png' href=<?='icon-' . $icon . '.png'?>>
   </head>
   <body>
     <h1>Web Shop Under Attack</h1>
