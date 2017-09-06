@@ -12,11 +12,13 @@ $mysqli = new mysqli(
 
 <html>
   <head>
-    <title>PHP Test</title>
+    <title>W3bShopAtt4ckzz</title>
   </head>
   <body>
     <?php
     echo '<h1>Web Shop Under Attack</h1>';
+
+    echo '<h3>Host: ' . getenv("HOST") . '</h3>';
 
     $tables = $mysqli->query("SHOW TABLES");
     debug($tables);
