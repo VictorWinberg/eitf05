@@ -1,5 +1,5 @@
 <?php
-require 'env.php';
+include 'env.php';
 require 'utility.php';
 
 $mysqli = new mysqli(
