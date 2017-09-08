@@ -4,6 +4,13 @@ EITF05 Webbsäkerhet - `Web Shop Under Attack`
 ### Set up ssl connection
 Copy and overide ssl-config/httpd.conf to /PATH/TO/MAMP/conf/apache
 Copy and overide ssl-config/httpd-ssl.conf to /PATH/TO/MAMP/conf/apache/extra
+
+The base path for the web-page docs are to MAMPS htdocs. 
+If you want to change this to a custom folder find the follwing line in httpd.conf:
+`<Directory "/Applications/MAMP/htdocs">` And edit the path to where you have stored your files
+Also edit the following line in httpd-ssl.conf with the same path:
+`DocumentRoot "/Applications/MAMP/htdocs"`
+
 COPY certificate ssl-confg/web-sec.course.com.crt to /PATH/TO/MAMP/conf/apache
 COPY key ssl-config/web-sec.course.com.nopass.key to /PATH/TO/MAMP/conf/apahce
 Restart the servers.
