@@ -7,10 +7,7 @@ Copy and overide ssl-config/httpd-ssl.conf to /PATH/TO/MAMP/conf/apache/extra
 COPY certificate ssl-confg/web-sec.course.com.crt to /PATH/TO/MAMP/conf/apache
 COPY key ssl-config/web-sec.course.com.nopass.key to /PATH/TO/MAMP/conf/apahce
 Restart the servers.
-
-Go to https://localhost
-
-### (OPTIONAL) Set up DNS for the lulz
+### Set up DNS
 Add the following line "127.0.0.1 web-sec.course.com" in /etc/hosts 
 Go to https://web-sec.course.com
 
