@@ -47,10 +47,7 @@ function show_table($conn, $sql, $name) {
 ?>
 
 <html>
-  <head>
-    <title>W3bShopAtt4ckzz</title>
-    <link rel='icon' type='image/png' href='img/icon.png'>
-  </head>
+  <?php require_once('header.php'); ?>
   <body>
     <h1>Web Shop Under Attack</h1>
     <h3>Host: <?=$server?></h3>
