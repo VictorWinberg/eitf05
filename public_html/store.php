@@ -27,9 +27,9 @@ $products = array(
 				</tr>
 				<?php foreach($products as $product) { ?>
 					<tr>
-						<td><?php echo $product["name"]; ?></td>
-						<td><?php echo $product["price"]; ?></td>
-						<td><input type="checkbox" value="<?php echo $product["id"]; ?>"></td>
+						<td><?= $product['name'] ?></td>
+						<td><?= $product['price'] ?></td>
+						<td><input type="checkbox" value="<?= $product['id'] ?>"></td>
 					</tr>
 				<?php } ?>
 			</table>

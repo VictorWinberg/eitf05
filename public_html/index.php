@@ -1,20 +1,9 @@
-<?php include '../env.php' ?>
+<?php require 'connect.php' ?>
 <?php require 'utility.php' ?>
 <style>
   <?php include 'css/index.css' ?>
 </style>
 <?php
-
-$url = parse_url(getenv('CLEARDB_DATABASE_URL'));
-
-$server = $url['host'];
-$username = $url['user'];
-$password = $url['pass'];
-$db = substr($url['path'], 1);
-
-debug([$server, $username, $password, $db]);
-
-$conn = new mysqli($server, $username, $password, $db);
 
 function show_table($conn, $sql, $name) {
   $columns = $conn->query($sql);

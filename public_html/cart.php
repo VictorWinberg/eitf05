@@ -34,16 +34,16 @@ foreach($cart as $item) {
 				</tr>
 				<?php foreach($cart as $item) { ?>
 					<tr>
-						<td><?php echo $item["name"]; ?></td>
-						<td><?php echo $item["price"]; ?></td>
-						<td><input type="text" value="<?php echo $item["quantity"]; ?>"></td>
-						<td><?php echo ($item["price"] * $item["quantity"]); ?></td>
+						<td><?= $item['name'] ?></td>
+						<td><?= $item['price'] ?></td>
+						<td><input type="text" value="<?= $item['quantity'] ?>"></td>
+						<td><?= $item['price'] * $item['quantity'] ?></td>
 						<td><input type="submit" value="Ta bort"></td>
 					</tr>
 				<?php } ?>
 			</table>
 			<p>
-				<b>Summa:</b> <?php echo $total; ?>
+				<b>Summa:</b> <?= $total ?>
 			</p>
 			<input type="submit" value="Betala">
 		</form>
