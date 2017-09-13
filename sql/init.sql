@@ -12,6 +12,8 @@ CREATE TABLE Users (
 	id				INTEGER NOT NULL,
 	name			VARCHAR(255) NOT NULL,
 	address			VARCHAR(255) NOT NULL,
+	username		VARCHAR(255) NOT NULL,
+	userPass		VARCHAR(255) NOT NULL,
 	PRIMARY KEY		(id)
 );
 
@@ -35,10 +37,10 @@ CREATE TABLE Orders (
 -- Insert data into the tables --
 
 INSERT INTO   	Users (name, address)
-VALUES  		('Daniel Tovesson', 'Stora gatan 1, 12345 Lund'),
-				('Victor Winberg', 'Lilla gatan 2, 54321 Malmö'),
-				('Oscar Rydh', 'Stora torget 3, 12311 Lomma'),
-		  		('Øverste', 'Lilla troget 4, 11123 Eslöv');
+VALUES  		('Daniel Tovesson', 'Stora gatan 1, 12345 Lund', 'daniel', '123'),
+				('Victor Winberg', 'Lilla gatan 2, 54321 Malmö', 'victor', '123'),
+				('Oscar Rydh', 'Stora torget 3, 12311 Lomma', 'oscar', '123'),
+		  		('Øverste', 'Lilla troget 4, 11123 Eslöv', 'hanna', '123');
 
 INSERT INTO   	Items (name, price)
 VALUES  		('Fidget spinner', 0.90),
