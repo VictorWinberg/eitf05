@@ -19,6 +19,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {      // Not sure about this check
     session_regenerate_id();
     $_SESSION['username'] = $username;
     $_SESSION['logged_in'] = TRUE;
+    $_SESSION['shopping_cart'] = array();
     header("location: store.php");
   } else {
     $error = "Your Login Name or Password is invalid";
