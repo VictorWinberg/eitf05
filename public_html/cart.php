@@ -1,17 +1,30 @@
 <?php session_start(); ?>
 
+<?php require 'connect.php' ?>
+
 <?php
 
-// TODO Dummy data
-$cart = array(
-	array("id" => 1, "name" => "Fidget spinner", "price" => 0.90, "quantity" => 1),
-	array("id" => 2, "name" => "Fidget spinner edition", "price" => 1999.9, "quantity" => 2),
-	array("id" => 3, "name" => "Mjölk", "price" => 10.79, "quantity" => 4)
-);
+// Get items in shopping cart
+$cart = $conn->query('SELECT *
+					  FROM Items
+					  WHERE id
+					  IN ('. implode(",", $_SESSION['shopping_cart']) .')
+					  GROUP BY id');
 
+// Count the quantities of all items
+$quantities = array();
+foreach ($_SESSION['shopping_cart'] as $itemId) {
+	if (!isset($quantities[$itemId])) {
+		$quantities[$itemId] = 1;
+	} else {
+		$quantities[$itemId]++;
+	}
+}
+
+// Count the total price of all items
 $total = 0;
 foreach($cart as $item) {
-	$total += ($item["price"] * $item["quantity"]);
+	$total += ($item["price"] * $quantities[$item["id"]]);
 }
 
 ?>
@@ -24,29 +37,37 @@ foreach($cart as $item) {
 
 		<h1>Kundvagn</h1>
 
-		<form>
-			<table>
-				<tr>
-					<th>Namn</th>
-					<th>Á-pris</th>
-					<th>Antal</th>
-					<th>Totalt</th>
-				</tr>
-				<?php foreach($cart as $item) { ?>
+		<?php if (count($cart)) { ?>
+
+			<form>
+				<table>
 					<tr>
-						<td><?= $item['name'] ?></td>
-						<td><?= $item['price'] ?></td>
-						<td><input type="text" value="<?= $item['quantity'] ?>"></td>
-						<td><?= $item['price'] * $item['quantity'] ?></td>
-						<td><input type="submit" value="Ta bort"></td>
+						<th>Namn</th>
+						<th>Á-pris</th>
+						<th>Antal</th>
+						<th>Totalt</th>
 					</tr>
-				<?php } ?>
-			</table>
-			<p>
-				<b>Summa:</b> <?= $total ?>
-			</p>
-			<input type="submit" value="Betala">
-		</form>
+					<?php foreach($cart as $item) { ?>
+						<tr>
+							<td><?= $item['name'] ?></td>
+							<td><?= $item['price'] ?></td>
+							<td><input type="text" value="<?= $quantities[$item["id"]] ?>"></td>
+							<td><?= $item['price'] * $quantities[$item["id"]] ?></td>
+							<td><input type="submit" value="Ta bort"></td>
+						</tr>
+					<?php } ?>
+				</table>
+				<p>
+					<b>Summa:</b> <?= $total ?>
+				</p>
+				<input type="submit" value="Betala">
+			</form>
+
+		<?php } else { ?>
+
+			<p>Inga produkter</p>
+
+		<?php } ?>
 
 	</body>
 </html>

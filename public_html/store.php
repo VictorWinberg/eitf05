@@ -5,6 +5,16 @@ if (!isset($_SESSION['logged_in'])) {
 }
 ?>
 
+<?php
+
+// Add items to shopping cart
+if (isset($_POST["submit"])) {
+	$_SESSION['shopping_cart'] = array_merge($_POST["itemIds"], $_SESSION['shopping_cart']);
+	// TODO Remove abuse with cmd+r
+}
+
+?>
+
 <?php require 'connect.php' ?>
 
 <!-- Get items from database -->
@@ -18,7 +28,7 @@ if (!isset($_SESSION['logged_in'])) {
 
 		<h1>Produkter</h1>
 
-		<form>
+		<form method="post">
 			<table>
 				<tr>
 					<th>Namn</th>
@@ -28,12 +38,12 @@ if (!isset($_SESSION['logged_in'])) {
 					<tr>
 						<td><?= $item['name'] ?></td>
 						<td><?= $item['price'] ?></td>
-						<td><input type="checkbox" value="<?= $item['id'] ?>"></td>
+						<td><input type="checkbox" name="itemIds[]" value="<?= $item['id'] ?>"></td>
 					</tr>
 				<?php } ?>
 			</table>
 			<br/>
-			<input type="submit" value="Lägg till i varukorgen">
+			<input type="submit" name="submit" value="Lägg till i varukorgen">
 		</form>
 
 	</body>
