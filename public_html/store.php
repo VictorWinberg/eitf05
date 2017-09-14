@@ -1,15 +1,9 @@
+<?php require 'connect.php' ?>
+
 <link rel="stylesheet" href="css/index.css" />
 
-<?php
-
-// TODO Dummy data
-$products = array(
-	array("id" => 1, "name" => "Fidget spinner", "price" => 0.90),
-	array("id" => 2, "name" => "Fidget spinner edition", "price" => 1999.9),
-	array("id" => 3, "name" => "Mjölk", "price" => 10.79)
-);
-
-?>
+<!-- Get items from database -->
+<?php $items = $conn->query('SELECT * FROM Items'); ?>
 
 <html>
 	<?php require_once('header.php'); ?>
@@ -25,11 +19,11 @@ $products = array(
 					<th>Namn</th>
 					<th>Pris</th>
 				</tr>
-				<?php foreach($products as $product) { ?>
+				<?php foreach($items as $item) { ?>
 					<tr>
-						<td><?= $product['name'] ?></td>
-						<td><?= $product['price'] ?></td>
-						<td><input type="checkbox" value="<?= $product['id'] ?>"></td>
+						<td><?= $item['name'] ?></td>
+						<td><?= $item['price'] ?></td>
+						<td><input type="checkbox" value="<?= $item['id'] ?>"></td>
 					</tr>
 				<?php } ?>
 			</table>
