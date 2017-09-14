@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="css/index.css" />
-
 <?php
 
 // TODO Dummy data

@@ -15,7 +15,7 @@ if (!isset($_SESSION['logged_in'])) {
 	<body>
 
 		<?php require_once('navigationBar.php'); ?>
-		<h1> Hejsan: <?= $_SESSION["username"]; ?> </h1>
+
 		<h1>Produkter</h1>
 
 		<form>
