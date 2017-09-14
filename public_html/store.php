@@ -1,4 +1,10 @@
-<link rel="stylesheet" href="css/index.css" />
+<?php
+ session_start(); 
+ if (!isset($_SESSION['logged_in'])) {
+	 header("location: login.php");
+ }
+?>
+
 
 <?php
 
@@ -16,7 +22,7 @@ $products = array(
 	<body>
 
 		<?php require_once('navigationBar.php'); ?>
-
+		<h1> Hejsan: <?=$_SESSION["username"];?> </h1>
 		<h1>Produkter</h1>
 
 		<form>
