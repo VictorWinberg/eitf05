@@ -23,8 +23,10 @@ foreach ($_SESSION['shopping_cart'] as $itemId) {
 
 // Count the total price of all items
 $total = 0;
-foreach($cart as $item) {
-	$total += ($item["price"] * $quantities[$item["id"]]);
+if ($cart) {
+	foreach($cart as $item) {
+		$total += ($item["price"] * $quantities[$item["id"]]);
+	}
 }
 
 ?>
@@ -37,7 +39,7 @@ foreach($cart as $item) {
 
 		<h1>Kundvagn</h1>
 
-		<?php if (count($cart)) { ?>
+		<?php if ($cart) { ?>
 
 			<form>
 				<table>
