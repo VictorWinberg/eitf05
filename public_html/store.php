@@ -1,16 +1,19 @@
-<?php require 'connect.php' ?>
+<?php
+ session_start(); 
+ if (!isset($_SESSION['logged_in'])) {
+	 header("location: login.php");
+ }
+?>
 
-<link rel="stylesheet" href="css/index.css" />
 
-<!-- Get items from database -->
-<?php $items = $conn->query('SELECT * FROM Items'); ?>
+<?php
 
 <html>
 	<?php require_once('header.php'); ?>
 	<body>
 
 		<?php require_once('navigationBar.php'); ?>
-
+		<h1> Hejsan: <?=$_SESSION["username"];?> </h1>
 		<h1>Produkter</h1>
 
 		<form>

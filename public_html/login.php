@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 require 'connect.php';
@@ -7,6 +6,7 @@ require 'connect.php';
 if($_SERVER["REQUEST_METHOD"] == "POST") {      // Not sure about this check
 
   // TODO: Use stripslashes and mysql_real_escape_string
+
   $username = $_POST['username'];
   $password = $_POST['password'];
 
@@ -16,8 +16,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {      // Not sure about this check
   $rows = mysqli_num_rows($result);
 
   if($rows == 1) {
-    $_SESSION['login_user'] = $username;
-    header("location: index.php");
+    session_regenerate_id();
+    $_SESSION['username'] = $username;
+    $_SESSION['logged_in'] = TRUE;
+    $_SESSION['shopping_cart'] = array();
+    header("location: store.php");
   } else {
     $error = "Your Login Name or Password is invalid";
   }
