@@ -13,7 +13,7 @@ CREATE TABLE Users (
 	name			VARCHAR(255) NOT NULL,
 	address			VARCHAR(255) NOT NULL,
 	username		VARCHAR(255) NOT NULL,
-	userPass		VARCHAR(255) NOT NULL,
+	hash			VARCHAR(255) NOT NULL,
 	PRIMARY KEY		(id)
 );
 
@@ -36,11 +36,11 @@ CREATE TABLE Orders (
 
 -- Insert data into the tables --
 
-INSERT INTO   	Users (name, address, username, userPass)
-VALUES  		('Daniel Tovesson', 'Stora gatan 1, 12345 Lund', 'daniel', '123'),
-				('Victor Winberg', 'Lilla gatan 2, 54321 Malmö', 'victor', '123'),
-				('Oscar Rydh', 'Stora torget 3, 12311 Lomma', 'oscar', '123'),
-		  		('Øverste', 'Lilla troget 4, 11123 Eslöv', 'hanna', '123');
+INSERT INTO   	Users (name, address, username, hash)
+VALUES  		('Daniel Tovesson', 'Stora gatan 1, 12345 Lund', 'daniel', '$2y$10$CHbI37mESYuZgBOzd0UCi.nIF1iuJRqlSPk/DHaOnv/JIYNOtGfhW'),
+				('Victor Winberg', 'Lilla gatan 2, 54321 Malmö', 'victor', '$2y$10$SQYRwALmfsjSe/W1jO8zaeAV69ziiY7m7i4G0JyJwQbQsHSb1NOKC'),
+				('Oscar Rydh', 'Stora torget 3, 12311 Lomma', 'oscar', '$2y$10$9dAXYvgCdlPo0QfyGQqHFODu1d.b.VT2Is28DcJXPubaNAh.JyfGW'),
+		  		('Øverste', 'Lilla torget 4, 11123 Eslöv', 'hanna', '$2y$10$S284DWkRDd9EGax8Op2Rgu7zXMruaZNxxtdvk9xisWPZusHB2uz7O');
 
 INSERT INTO   	Items (name, price)
 VALUES  		('Fidget spinner', 0.90),

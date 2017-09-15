@@ -10,20 +10,24 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {      // Not sure about this check
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-  // TODO: Make safe
+  // TODO: Make safe, seems safe with mysqli?
   $sql = "SELECT * FROM Users WHERE username = '$username'";
   $result = $conn->query($sql);
   $rows = mysqli_num_rows($result);
 
-  if($rows == 1) {
+  if($rows == 1 && verifyPassword($password, $result->fetch_array()['hash'])) {
     session_regenerate_id();
     $_SESSION['username'] = $username;
     $_SESSION['logged_in'] = TRUE;
     $_SESSION['shopping_cart'] = array();
     header("location: store.php");
   } else {
-    $error = "Your Login Name or Password is invalid";
+    $error = "Your Username and/or Password is invalid";
   }
+}
+
+function verifyPassword($password, $hash) {
+  return password_verify($password, $hash);
 }
 ?>
 <html>
