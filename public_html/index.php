@@ -1,8 +1,6 @@
 <?php require 'connect.php' ?>
 <?php require 'utility.php' ?>
-<style>
-  <?php include 'css/index.css' ?>
-</style>
+
 <?php
 
 function show_table($conn, $sql, $name) {

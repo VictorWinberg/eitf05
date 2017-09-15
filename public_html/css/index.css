@@ -41,6 +41,6 @@ tr:nth-child(even) {
 
 /* Add a color to the active/current link */
 .navigationBar a.active {
-    background-color: #4CAF50;
+    background-color: #3252b6;
     color: white;
 }

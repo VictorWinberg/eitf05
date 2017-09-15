@@ -11,7 +11,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {      // Not sure about this check
   $password = $_POST['password'];
 
   // TODO: Make safe
-  $sql = "SELECT * FROM users WHERE name = '$username'";
+  $sql = "SELECT * FROM Users WHERE username = '$username'";
   $result = $conn->query($sql);
   $rows = mysqli_num_rows($result);
 

@@ -1,46 +1,49 @@
 <?php
- session_start(); 
- if (!isset($_SESSION['logged_in'])) {
-	 header("location: login.php");
- }
+session_start();
+if (!isset($_SESSION['logged_in'])) {
+	header("location: login.php");
+}
 ?>
-
 
 <?php
 
-// TODO Dummy data
-$products = array(
-	array("id" => 1, "name" => "Fidget spinner", "price" => 0.90),
-	array("id" => 2, "name" => "Fidget spinner edition", "price" => 1999.9),
-	array("id" => 3, "name" => "Mjölk", "price" => 10.79)
-);
+// Add items to shopping cart
+if (isset($_POST["submit"])) {
+	$_SESSION['shopping_cart'] = array_merge($_POST["itemIds"], $_SESSION['shopping_cart']);
+	// TODO Remove abuse with cmd+r
+}
 
 ?>
+
+<?php require 'connect.php' ?>
+
+<!-- Get items from database -->
+<?php $items = $conn->query('SELECT * FROM Items'); ?>
 
 <html>
 	<?php require_once('header.php'); ?>
 	<body>
 
 		<?php require_once('navigationBar.php'); ?>
-		<h1> Hejsan: <?=$_SESSION["username"];?> </h1>
+
 		<h1>Produkter</h1>
 
-		<form>
+		<form method="post">
 			<table>
 				<tr>
 					<th>Namn</th>
 					<th>Pris</th>
 				</tr>
-				<?php foreach($products as $product) { ?>
+				<?php foreach($items as $item) { ?>
 					<tr>
-						<td><?= $product['name'] ?></td>
-						<td><?= $product['price'] ?></td>
-						<td><input type="checkbox" value="<?= $product['id'] ?>"></td>
+						<td><?= $item['name'] ?></td>
+						<td><?= $item['price'] ?></td>
+						<td><input type="checkbox" name="itemIds[]" value="<?= $item['id'] ?>"></td>
 					</tr>
 				<?php } ?>
 			</table>
 			<br/>
-			<input type="submit" value="Lägg till i varukorgen">
+			<input type="submit" name="submit" value="Lägg till i varukorgen">
 		</form>
 
 	</body>
