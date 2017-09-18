@@ -70,7 +70,7 @@ foreach($cart as $item) {
 							</form>
 							<td><?= $item['price'] * $item['quantity'] ?></td>
 							<form method="post">
-								<td><input type="submit" name="remove" value="Ta bort"></td>
+								<td><button class="btn" type="submit" name="remove">Ta bort</button></td>
 								<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
 							</form>
 						</tr>
@@ -79,7 +79,7 @@ foreach($cart as $item) {
 			<p>
 				<b>Summa:</b> <?= $total ?>
 			</p>
-			<input type="submit" name="pay" value="Betala">
+			<button class="btn" type="submit" name="pay">Betala</button>
 
 		<?php } else { ?>
 
