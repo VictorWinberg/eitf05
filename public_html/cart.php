@@ -5,7 +5,9 @@ if (!isset($_SESSION['logged_in'])) {
 }
 ?>
 
-<?php require 'connect.php' ?>
+<?php 
+require 'connect.php';
+?>
 
 <?php
 
@@ -37,9 +39,11 @@ if ($result) {
 
 // Count the total price of all items
 $total = 0;
-foreach($cart as $item) {
-	$total += ($item['price'] * $item['quantity']);
-}
+if ($cart) {
+	foreach($cart as $item) {
+	  $total += ($item['price'] * $item['quantity']);
+	}
+	$_SESSION["total_price"] = $total;
 
 ?>
 
@@ -74,12 +78,13 @@ foreach($cart as $item) {
 								<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
 							</form>
 						</tr>
-				<?php } ?>
-			</table>
-			<p>
-				<b>Summa:</b> <?= $total ?>
-			</p>
-			<input type="submit" name="pay" value="Betala">
+					<?php } ?>
+				</table>
+				<p>
+					<b>Summa:</b> <?= $total ?>
+				</p>
+				<input type="submit" value="Betala" onClick="return handlePayment()" >
+			</form>
 
 		<?php } else { ?>
 
@@ -88,4 +93,11 @@ foreach($cart as $item) {
 		<?php } ?>
 
 	</body>
+	<script type='text/javascript' >
+	function handlePayment() 
+	{
+		window.location = '/payment.php';
+		return false;
+	}
+	</script>
 </html>
