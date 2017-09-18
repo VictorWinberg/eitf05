@@ -5,7 +5,9 @@ if (!isset($_SESSION['logged_in'])) {
 }
 ?>
 
-<?php require 'connect.php' ?>
+<?php 
+require 'connect.php';
+?>
 
 <?php
 
@@ -32,6 +34,7 @@ if ($cart) {
 	foreach($cart as $item) {
 		$total += ($item["price"] * $quantities[$item["id"]]);
 	}
+	$_SESSION["total_price"] = $total;
 }
 
 ?>
@@ -67,7 +70,7 @@ if ($cart) {
 				<p>
 					<b>Summa:</b> <?= $total ?>
 				</p>
-				<input type="submit" value="Betala">
+				<input type="submit" value="Betala" onClick="return handlePayment()" >
 			</form>
 
 		<?php } else { ?>
@@ -77,4 +80,11 @@ if ($cart) {
 		<?php } ?>
 
 	</body>
+	<script type='text/javascript' >
+	function handlePayment() 
+	{
+		window.location = '/payment.php';
+		return false;
+	}
+	</script>
 </html>
