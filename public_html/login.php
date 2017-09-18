@@ -30,7 +30,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $_SESSION['shopping_cart'] = array();
     header("location: store.php");
   } else {
-    $error = "Your Username and/or Password is invalid";
+    $error = "Ditt användarnamn och/eller lösenord är felaktigt";
   }
 }
 ?>
@@ -38,24 +38,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   <head><title>Login Page</title></head>
 
   <body>
-    <h1>Login</h1>
+    <h1>Logga in</h1>
 
-    <div style="padding:2em">
+    <form action="" method="POST">
+      <label><b>Användarnamn:</b></label>
+      <input type="text" name="username"/>
+      <br /><br />
+      <label><b>Lösenord:</b></label>
+      <input type="password" name="password"/>
+      <br/><br />
+      <button type="submit">Logga in</button>
+    </form>
 
-       <form action="" method="POST">
-          <label><b>Username:</b></label>
-          <input type="text" name="username"/>
-          <br /><br />
-          <label><b>Password:</b></label>
-          <input type="password" name="password"/>
-          <br/><br />
-          <button type="submit">Login</button>
-       </form>
-
-       <div style="font-size:0.8em; color:red">
-         <?php if(isset($error)) echo $error; ?>
-       </div>
-
+    <div style="font-size:0.8em; color:red">
+     <?php if(isset($error)) echo $error; ?>
     </div>
   </body>
 </html>

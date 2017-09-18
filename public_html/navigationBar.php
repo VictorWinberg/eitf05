@@ -12,4 +12,7 @@
 	<a href="cart.php"<?= $site == "cart.php" ? 'class="active"' : '' ?>>
 		Kundvagn
 	</a>
+	<a href="edit.php"<?= $site == "edit.php" ? 'class="active"' : '' ?>>
+		Hantera
+	</a>
 </div>
