@@ -5,8 +5,9 @@ if (!isset($_SESSION['logged_in'])) {
 }
 ?>
 
-<?php 
-require 'connect.php';
+<?php
+	require 'connect.php';
+	require 'utility.php';
 ?>
 
 <?php
@@ -14,36 +15,17 @@ require 'connect.php';
 // Update the item quantity in the shopping cart
 if (isset($_POST['quantity'])) {
 	$_SESSION['shopping_cart'][$_POST['itemId']] = $_POST['quantity'];
+	updateTotalPrice($conn);
 }
 
 // Remove the item from the shopping cart
 if (isset($_POST['remove'])) {
 	unset($_SESSION['shopping_cart'][$_POST['itemId']]);
+	updateTotalPrice($conn);
 }
 
-// Get items in shopping cart
-$result = $conn->query('SELECT *
-					  	FROM Items
-					  	WHERE id
-					  	IN ('. implode(",", array_keys($_SESSION['shopping_cart'])) .')
-					  	GROUP BY id');
-
-// Create cart
-$cart = array();
-if ($result) {
-	while ($row = $result->fetch_assoc()) {
-		$row['quantity'] = $_SESSION['shopping_cart'][$row['id']];
-		$cart[] = $row;
-	}
-}
-
-// Count the total price of all items
-$total = 0;
-if ($cart) {
-	foreach($cart as $item) {
-	  $total += ($item['price'] * $item['quantity']);
-	}
-	$_SESSION["total_price"] = $total;
+// Get shopping cart array
+$cart = getCart($conn);
 
 ?>
 
@@ -55,7 +37,7 @@ if ($cart) {
 
 		<h1>Kundvagn</h1>
 
-		<?php if ($cart) { ?>
+		<?php if (count($cart)) { ?>
 
 			<table>
 				<tr>
@@ -65,26 +47,25 @@ if ($cart) {
 					<th>Totalt</th>
 				</tr>
 				<?php foreach($cart as $item) { ?>
-						<tr>
-							<td><?= $item['name'] ?></td>
-							<td><?= $item['price'] ?></td>
-							<form method="post">
-								<td><input type="number" name="quantity" value="<?= $item['quantity'] ?>"></td>
-								<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
-							</form>
-							<td><?= $item['price'] * $item['quantity'] ?></td>
-							<form method="post">
-								<td><input type="submit" name="remove" value="Ta bort"></td>
-								<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
-							</form>
-						</tr>
-					<?php } ?>
-				</table>
-				<p>
-					<b>Summa:</b> <?= $total ?>
-				</p>
-				<input type="submit" value="Betala" onClick="return handlePayment()" >
-			</form>
+					<tr>
+						<td><?= $item['name'] ?></td>
+						<td><?= $item['price'] ?></td>
+						<form method="post">
+							<td><input type="number" name="quantity" value="<?= $item['quantity'] ?>"></td>
+							<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
+						</form>
+						<td><?= $item['price'] * $item['quantity'] ?></td>
+						<form method="post">
+							<td><input type="submit" name="remove" value="Ta bort"></td>
+							<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
+						</form>
+					</tr>
+				<?php } ?>
+			</table>
+			<p>
+				<b>Summa:</b> <?= $_SESSION["total_price"] ?>
+			</p>
+			<input type="submit" value="Betala" onClick="return handlePayment()" >
 
 		<?php } else { ?>
 
@@ -93,11 +74,10 @@ if ($cart) {
 		<?php } ?>
 
 	</body>
-	<script type='text/javascript' >
-	function handlePayment() 
-	{
-		window.location = '/payment.php';
-		return false;
-	}
+	<script type='text/javascript'>
+		function handlePayment() {
+			window.location = '/payment.php';
+			return false;
+		}
 	</script>
 </html>
