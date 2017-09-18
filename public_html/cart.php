@@ -10,28 +10,25 @@ if (!isset($_SESSION['logged_in'])) {
 <?php
 
 // Get items in shopping cart
-$cart = $conn->query('SELECT *
-					  FROM Items
-					  WHERE id
-					  IN ('. implode(",", $_SESSION['shopping_cart']) .')
-					  GROUP BY id');
+$result = $conn->query('SELECT *
+					  	FROM Items
+					  	WHERE id
+					  	IN ('. implode(",", array_keys($_SESSION['shopping_cart'])) .')
+					  	GROUP BY id');
 
-// Count the quantities of all items
-$quantities = array();
-foreach ($_SESSION['shopping_cart'] as $itemId) {
-	if (!isset($quantities[$itemId])) {
-		$quantities[$itemId] = 1;
-	} else {
-		$quantities[$itemId]++;
+// Create cart
+$cart = array();
+if ($result) {
+	while ($row = $result->fetch_assoc()) {
+		$row['quantity'] = $_SESSION['shopping_cart'][$row['id']];
+		$cart[] = $row;
 	}
 }
 
 // Count the total price of all items
 $total = 0;
-if ($cart) {
-	foreach($cart as $item) {
-		$total += ($item["price"] * $quantities[$item["id"]]);
-	}
+foreach($cart as $item) {
+	$total += ($item['price'] * $item['quantity']);
 }
 
 ?>
@@ -58,8 +55,8 @@ if ($cart) {
 						<tr>
 							<td><?= $item['name'] ?></td>
 							<td><?= $item['price'] ?></td>
-							<td><input type="text" value="<?= $quantities[$item["id"]] ?>"></td>
-							<td><?= $item['price'] * $quantities[$item["id"]] ?></td>
+							<td><input type="text" value="<?= $item['quantity'] ?>"></td>
+							<td><?= $item['price'] * $item['quantity'] ?></td>
 							<td><input type="submit" value="Ta bort"></td>
 						</tr>
 					<?php } ?>
