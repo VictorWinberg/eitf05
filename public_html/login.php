@@ -2,6 +2,7 @@
 session_start();
 
 require 'connect.php';
+$title = 'Login - Fidget Express';
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {      // Not sure about this check
 
@@ -31,7 +32,7 @@ function verifyPassword($password, $hash) {
 }
 ?>
 <html>
-  <head><title>Login Page</title></head>
+  <?php require('header.php') ?>
 
   <body>
     <h1>Login</h1>
