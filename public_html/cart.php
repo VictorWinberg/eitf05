@@ -65,7 +65,7 @@ foreach($cart as $item) {
 							<td><?= $item['name'] ?></td>
 							<td><?= $item['price'] ?></td>
 							<form method="post">
-								<td><input type="text" name="quantity" value="<?= $item['quantity'] ?>"></td>
+								<td><input type="number" name="quantity" value="<?= $item['quantity'] ?>"></td>
 								<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
 							</form>
 							<td><?= $item['price'] * $item['quantity'] ?></td>
