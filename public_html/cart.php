@@ -9,6 +9,16 @@ if (!isset($_SESSION['logged_in'])) {
 
 <?php
 
+// Update the item quantity in the shopping cart
+if (isset($_POST['quantity'])) {
+	$_SESSION['shopping_cart'][$_POST['itemId']] = $_POST['quantity'];
+}
+
+// Remove the item from the shopping cart
+if (isset($_POST['remove'])) {
+	unset($_SESSION['shopping_cart'][$_POST['itemId']]);
+}
+
 // Get items in shopping cart
 $result = $conn->query('SELECT *
 					  	FROM Items
@@ -43,29 +53,33 @@ foreach($cart as $item) {
 
 		<?php if ($cart) { ?>
 
-			<form>
-				<table>
-					<tr>
-						<th>Namn</th>
-						<th>Á-pris</th>
-						<th>Antal</th>
-						<th>Totalt</th>
-					</tr>
-					<?php foreach($cart as $item) { ?>
+			<table>
+				<tr>
+					<th>Namn</th>
+					<th>Á-pris</th>
+					<th>Antal</th>
+					<th>Totalt</th>
+				</tr>
+				<?php foreach($cart as $item) { ?>
 						<tr>
 							<td><?= $item['name'] ?></td>
 							<td><?= $item['price'] ?></td>
-							<td><input type="text" value="<?= $item['quantity'] ?>"></td>
+							<form method="post">
+								<td><input type="text" name="quantity" value="<?= $item['quantity'] ?>"></td>
+								<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
+							</form>
 							<td><?= $item['price'] * $item['quantity'] ?></td>
-							<td><input type="submit" value="Ta bort"></td>
+							<form method="post">
+								<td><input type="submit" name="remove" value="Ta bort"></td>
+								<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
+							</form>
 						</tr>
-					<?php } ?>
-				</table>
-				<p>
-					<b>Summa:</b> <?= $total ?>
-				</p>
-				<input type="submit" value="Betala">
-			</form>
+				<?php } ?>
+			</table>
+			<p>
+				<b>Summa:</b> <?= $total ?>
+			</p>
+			<input type="submit" name="pay" value="Betala">
 
 		<?php } else { ?>
 

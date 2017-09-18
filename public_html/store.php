@@ -8,7 +8,7 @@ if (!isset($_SESSION['logged_in'])) {
 <?php
 
 // Add items to shopping cart
-if (isset($_POST['submit'])) {
+if (isset($_POST['add'])) {
 	foreach ($_POST['itemIds'] as $itemId => $quantity) {
 		if ($quantity == 0) {
 			continue;
@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 				<?php } ?>
 			</table>
 			<br/>
-			<input type="submit" name="submit" value="Lägg till i varukorgen">
+			<input type="submit" name="add" value="Lägg till i varukorgen">
 		</form>
 
 	</body>
