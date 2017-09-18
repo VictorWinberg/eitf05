@@ -8,9 +8,13 @@ if (!isset($_SESSION['logged_in'])) {
 <?php
 
 // Add items to shopping cart
-if (isset($_POST["submit"])) {
-	$_SESSION['shopping_cart'] = array_merge($_POST["itemIds"], $_SESSION['shopping_cart']);
-	// TODO Remove abuse with cmd+r
+if (isset($_POST['add'])) {
+	foreach ($_POST['itemIds'] as $itemId => $quantity) {
+		if ($quantity == 0) {
+			continue;
+		}
+		$_SESSION['shopping_cart'][$itemId] = isset($_SESSION['shopping_cart'][$itemId]) ? $_SESSION['shopping_cart'][$itemId] + $quantity : $quantity;
+	}
 }
 
 ?>
@@ -33,17 +37,18 @@ if (isset($_POST["submit"])) {
 				<tr>
 					<th>Namn</th>
 					<th>Pris</th>
+					<th>Antal</th>
 				</tr>
 				<?php foreach($items as $item) { ?>
 					<tr>
 						<td><?= $item['name'] ?></td>
 						<td><?= $item['price'] ?></td>
-						<td><input type="checkbox" name="itemIds[]" value="<?= $item['id'] ?>"></td>
+						<td><input type="number" name="itemIds[<?= $item['id'] ?>]" value=0></td>
 					</tr>
 				<?php } ?>
 			</table>
 			<br/>
-			<input type="submit" name="submit" value="Lägg till i varukorgen">
+			<input type="submit" name="add" value="Lägg till i varukorgen">
 		</form>
 
 	</body>

@@ -11,20 +11,29 @@ require 'connect.php';
 
 <?php
 
-// Get items in shopping cart
-$cart = $conn->query('SELECT *
-					  FROM Items
-					  WHERE id
-					  IN ('. implode(",", $_SESSION['shopping_cart']) .')
-					  GROUP BY id');
+// Update the item quantity in the shopping cart
+if (isset($_POST['quantity'])) {
+	$_SESSION['shopping_cart'][$_POST['itemId']] = $_POST['quantity'];
+}
 
-// Count the quantities of all items
-$quantities = array();
-foreach ($_SESSION['shopping_cart'] as $itemId) {
-	if (!isset($quantities[$itemId])) {
-		$quantities[$itemId] = 1;
-	} else {
-		$quantities[$itemId]++;
+// Remove the item from the shopping cart
+if (isset($_POST['remove'])) {
+	unset($_SESSION['shopping_cart'][$_POST['itemId']]);
+}
+
+// Get items in shopping cart
+$result = $conn->query('SELECT *
+					  	FROM Items
+					  	WHERE id
+					  	IN ('. implode(",", array_keys($_SESSION['shopping_cart'])) .')
+					  	GROUP BY id');
+
+// Create cart
+$cart = array();
+if ($result) {
+	while ($row = $result->fetch_assoc()) {
+		$row['quantity'] = $_SESSION['shopping_cart'][$row['id']];
+		$cart[] = $row;
 	}
 }
 
@@ -32,10 +41,9 @@ foreach ($_SESSION['shopping_cart'] as $itemId) {
 $total = 0;
 if ($cart) {
 	foreach($cart as $item) {
-		$total += ($item["price"] * $quantities[$item["id"]]);
+	  $total += ($item['price'] * $item['quantity']);
 	}
 	$_SESSION["total_price"] = $total;
-}
 
 ?>
 
@@ -49,21 +57,26 @@ if ($cart) {
 
 		<?php if ($cart) { ?>
 
-			<form>
-				<table>
-					<tr>
-						<th>Namn</th>
-						<th>Á-pris</th>
-						<th>Antal</th>
-						<th>Totalt</th>
-					</tr>
-					<?php foreach($cart as $item) { ?>
+			<table>
+				<tr>
+					<th>Namn</th>
+					<th>Á-pris</th>
+					<th>Antal</th>
+					<th>Totalt</th>
+				</tr>
+				<?php foreach($cart as $item) { ?>
 						<tr>
 							<td><?= $item['name'] ?></td>
 							<td><?= $item['price'] ?></td>
-							<td><input type="text" value="<?= $quantities[$item["id"]] ?>"></td>
-							<td><?= $item['price'] * $quantities[$item["id"]] ?></td>
-							<td><input type="submit" value="Ta bort"></td>
+							<form method="post">
+								<td><input type="number" name="quantity" value="<?= $item['quantity'] ?>"></td>
+								<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
+							</form>
+							<td><?= $item['price'] * $item['quantity'] ?></td>
+							<form method="post">
+								<td><input type="submit" name="remove" value="Ta bort"></td>
+								<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
+							</form>
 						</tr>
 					<?php } ?>
 				</table>
