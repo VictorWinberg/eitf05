@@ -8,7 +8,7 @@ function show_table($conn, $sql, $name) {
   debug($sql);
   debug($columns);
 
-  if(mysqli_num_rows($columns)) {
+  if($columns->num_rows) {
     echo '<table>';
     echo '<caption>' . $name . '</caption>';
 
