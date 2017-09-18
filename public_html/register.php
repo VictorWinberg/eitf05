@@ -1,23 +1,23 @@
 <?php
+session_start();
 require 'connect.php';
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+  $name = $_POST['name'];
+  $address = $_POST['address'];
+  $username = $_POST['username'];
+  $password = $_POST['password'];
 
-$name = $_POST['name'];
-$address = $_POST['address'];
-$username = $_POST['username'];
-$password = $_POST['password'];
+  $hash = password_hash($password);
 
+  $sql = "INSERT INTO Users (name, address, username, password, hash)
+  VALUES ($name, $address, $username, $password, $hash)";
+  $conn->query($sql);
+  
+  $_SESSION['username'] = $username;
+  $_SESSION['logged_in'] = TRUE;
+  header("location: store.php");
 
-
-
-
-//$hash = password_hash($password);
-
-
-
-//$sql = "INSERT INTO Users (name, address, username, password, hash)
-//VALUES ('John', 'Doe', 'address')";
-
-
+}
 ?>
 
 <html>
