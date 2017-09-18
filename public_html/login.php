@@ -3,19 +3,27 @@ session_start();
 
 require 'connect.php';
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {      // Not sure about this check
-
-  // TODO: Use stripslashes and mysql_real_escape_string
+if($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-  // TODO: Make safe, seems safe with mysqli?
-  $sql = "SELECT * FROM Users WHERE username = '$username'";
-  $result = $conn->query($sql);
-  $rows = mysqli_num_rows($result);
+  // Prepared statement
+  $stmt = $conn->prepare("SELECT hash FROM users WHERE username = ?");
 
-  if($rows == 1 && verifyPassword($password, $result->fetch_array()['hash'])) {
+  // Bind $username param as a string
+  $stmt->bind_param('s', $username);
+
+  $stmt->execute();
+
+  // Get the hash variable from the query.
+  $stmt->bind_result($hash);
+
+  // Fetch data and close statement
+  $stmt->fetch();
+  $stmt->close();
+
+  if(password_verify($password, $hash)) {
     session_regenerate_id();
     $_SESSION['username'] = $username;
     $_SESSION['logged_in'] = TRUE;
@@ -24,10 +32,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {      // Not sure about this check
   } else {
     $error = "Your Username and/or Password is invalid";
   }
-}
-
-function verifyPassword($password, $hash) {
-  return password_verify($password, $hash);
 }
 ?>
 <html>
