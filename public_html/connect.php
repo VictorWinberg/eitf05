@@ -1,15 +1,17 @@
 <?php
+function connect() {
+  include '../env.php';
+  $url = parse_url(getenv('CLEARDB_DATABASE_URL'));
 
-include '../env.php';
+  $server = $url['host'];
+  $username = $url['user'];
+  $password = $url['pass'];
+  $db = substr($url['path'], 1);
 
-$url = parse_url(getenv('CLEARDB_DATABASE_URL'));
+  $conn = new mysqli($server, $username, $password, $db);
+  $conn->set_charset('utf8');
+  return $conn;
+}
 
-$server = $url['host'];
-$username = $url['user'];
-$password = $url['pass'];
-$db = substr($url['path'], 1);
-
-$conn = new mysqli($server, $username, $password, $db);
-$conn->set_charset('utf8');
-
+$conn = connect();
 ?>

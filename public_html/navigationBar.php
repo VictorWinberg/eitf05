@@ -7,7 +7,7 @@
 		Logga ut
 	</a>
 	<a href="profile.php" class="<?= $site == 'profile.php' ? 'active' : '' ?>">
-		Min profil (<?= $_SESSION['username']?>)
+		Min profil (<?= $_SESSION['login_user']['name'] ?>)
 	</a>
 	<a href="cart.php" class="<?= $site == 'cart.php' ? 'active' : '' ?>">
 		Kundvagn

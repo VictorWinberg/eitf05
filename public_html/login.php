@@ -10,25 +10,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   $password = $_POST['password'];
 
   // Prepared statement
-  $stmt = $conn->prepare("SELECT hash FROM users WHERE username = ?");
+  $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
 
   // Bind $username param as a string
   $stmt->bind_param('s', $username);
 
   $stmt->execute();
-
-  // Get the hash variable from the query.
-  $stmt->bind_result($hash);
-
-  // Fetch data and close statement
-  $stmt->fetch();
+  $result = $stmt->get_result();
   $stmt->close();
 
-  if(password_verify($password, $hash)) {
+  $login_user = $result->fetch_assoc();
+
+  if(password_verify($password, $login_user['hash'])) {
     session_regenerate_id();
-    $_SESSION['username'] = $username;
+    unset($login_user['hash']);
+
+    $_SESSION['login_user'] = $login_user;
     $_SESSION['logged_in'] = TRUE;
     $_SESSION['shopping_cart'] = array();
+
     header("location: store.php");
   } else {
     $error = "Ditt användarnamn och/eller lösenord är felaktigt";
