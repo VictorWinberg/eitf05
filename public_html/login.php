@@ -2,6 +2,7 @@
 session_start();
 
 require 'connect.php';
+$title = 'Login - Fidget Express';
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -35,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <html>
-  <head><title>Login Page</title></head>
+  <?php require('header.php') ?>
 
   <body>
     <h1>Logga in</h1>
