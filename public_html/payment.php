@@ -31,7 +31,6 @@ if (!isset($_SESSION['logged_in'])) {
         {
         // Adding 10 percent failure rate on payment
             var randomSuccess=Math.floor((Math.random() * 10));
-						console.log(randomSuccess);
             if (randomSuccess < 1) {
                 alert("Din betalning var lyckades ej. Var god försök igen!")
             } else {
