@@ -47,20 +47,28 @@ $orders = $conn->query("SELECT *
 
 		<h1>Ordrar</h1>
 
-		<table>
-			<tr>
-				<th>Namn</th>
-				<th>Pris</th>
-				<th>Beställd</th>
-			</tr>
-			<?php foreach($orders as $order) { ?>
+		<?php if (mysqli_num_rows($orders)) { ?>
+
+			<table>
 				<tr>
-					<td><?= $order['name'] ?></td>
-					<td><?= $order['price'] ?></td>
-					<td><?= $order['timePlaced'] ?></td>
+					<th>Namn</th>
+					<th>Pris</th>
+					<th>Beställd</th>
 				</tr>
-			<?php } ?>
-		</table>
+				<?php foreach($orders as $order) { ?>
+					<tr>
+						<td><?= $order['name'] ?></td>
+						<td><?= $order['price'] ?></td>
+						<td><?= $order['timePlaced'] ?></td>
+					</tr>
+				<?php } ?>
+			</table>
+
+		<?php } else { ?>
+
+			<p>Inga ordrar</p>
+
+		<?php } ?>
 
 	</body>
 </html>
