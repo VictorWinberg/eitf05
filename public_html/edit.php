@@ -6,7 +6,6 @@ if (!isset($_SESSION['logged_in'])) {
 ?>
 
 <?php require 'connect.php' ?>
-<?php require 'utility.php' ?>
 
 <?php
 
