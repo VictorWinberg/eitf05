@@ -39,20 +39,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   <?php require('header.php') ?>
 
   <body>
-    <h1>Logga in</h1>
+    <form class="form" action="" method="POST">
+      <h1>Login</h1>
 
-    <form action="" method="POST">
-      <label><b>Användarnamn:</b></label>
-      <input type="text" name="username"/>
-      <br /><br />
-      <label><b>Lösenord:</b></label>
-      <input type="password" name="password"/>
-      <br/><br />
-      <button type="submit">Logga in</button>
+      <input type="text" name="username" placeholder="username">
+      <br/><br/>
+      <input type="password" name="password" placeholder="password">
+      <br/><br/>
+      <button class="btn" style="width: 250" type="submit">login</button>
+      <p style="font-size: 0.8em; color: DarkSlateGray">
+        Don't have an account? <a href="register.php">Sign Up</a>
+      </p>
+      <p class="small" style="font-size: 0.8em; color:red">
+       <?php if(isset($error)) echo $error; ?>
+      </p>
     </form>
-
-    <div style="font-size:0.8em; color:red">
-     <?php if(isset($error)) echo $error; ?>
-    </div>
   </body>
 </html>

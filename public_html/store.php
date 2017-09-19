@@ -52,7 +52,7 @@ if (isset($_POST['add'])) {
 				<?php } ?>
 			</table>
 			<br/>
-			<input type="submit" name="add" value="Lägg till i varukorgen">
+			<button class="btn" type="submit" name="add">Lägg till i varukorgen</button>
 		</form>
 
 	</body>

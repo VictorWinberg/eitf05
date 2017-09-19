@@ -56,7 +56,7 @@ $cart = getCart($conn);
 						</form>
 						<td><?= $item['price'] * $item['quantity'] ?></td>
 						<form method="post">
-							<td><input type="submit" name="remove" value="Ta bort"></td>
+							<td><button type="submit" name="remove">Ta bort</button></td>
 							<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
 						</form>
 					</tr>
@@ -65,7 +65,7 @@ $cart = getCart($conn);
 			<p>
 				<b>Summa:</b> <?= $_SESSION["total_price"] ?>
 			</p>
-			<input type="submit" value="Betala" onClick="return handlePayment()" >
+			<button class="btn" onClick="handlePayment()">Betala</button>
 
 		<?php } else { ?>
 

@@ -58,7 +58,7 @@ if($method == "POST") {
 			 <label><b>Pris:</b></label>
 			 <input type="number" name="price"/>
 			 <br /><br />
-			 <button type="submit">Lägg till</button>
+			 <button class="btn" type="submit">Lägg till</button>
 		</form>
 
 		<h3>Ta bort produkt</h3>
@@ -68,7 +68,7 @@ if($method == "POST") {
 			 <label><b>Namn:</b></label>
 			 <input type="text" name="name"/>
 			 <br /><br />
-			 <button type="submit">Ta bort</button>
+			 <button class="btn" type="submit">Ta bort</button>
 		</form>
 
 	</body>
