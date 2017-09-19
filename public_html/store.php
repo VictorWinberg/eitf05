@@ -6,6 +6,11 @@ if (!isset($_SESSION['logged_in'])) {
 ?>
 
 <?php
+	require 'connect.php';
+	require 'utility.php';
+?>
+
+<?php
 
 // Add items to shopping cart
 if (isset($_POST['add'])) {
@@ -15,11 +20,10 @@ if (isset($_POST['add'])) {
 		}
 		$_SESSION['shopping_cart'][$itemId] = isset($_SESSION['shopping_cart'][$itemId]) ? $_SESSION['shopping_cart'][$itemId] + $quantity : $quantity;
 	}
+	updateTotalPrice($conn);
 }
 
 ?>
-
-<?php require 'connect.php' ?>
 
 <!-- Get items from database -->
 <?php $items = $conn->query('SELECT * FROM Items'); ?>
