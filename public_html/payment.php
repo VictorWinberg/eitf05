@@ -36,7 +36,7 @@ if (!isset($_SESSION['logged_in'])) {
             } else {
                 // Byta till kvitto när det är klart
                 window.location = '/store.php';
-								return false;
+                return false;
             }
         }
         </script>
