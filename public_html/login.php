@@ -48,7 +48,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       <br/><br/>
       <button class="btn" style="width: 250" type="submit">login</button>
       <p style="font-size: 0.8em; color: DarkSlateGray">
-        Don't have an account? <a href="register.php">Sign Up</a>
+        Don't have an account? <a href="sign-up.php">Sign Up</a>
       </p>
       <p class="small" style="font-size: 0.8em; color:red">
        <?php if(isset($error)) echo $error; ?>

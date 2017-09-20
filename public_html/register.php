@@ -1,9 +1,9 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 session_start();
+
 require 'connect.php';
+$title = 'Sign Up - Fidget Express';
+
 if($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = $_POST['name'];
   $address = $_POST['address'];
@@ -31,32 +31,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <html>
-  <head><title>Register Page</title></head>
+  <?php require('header.php') ?>
 
   <body>
-    <h1>Register</h1>
+    <form class="form" action="" method="POST">
+      <h1>Sign Up</h1>
 
-    <div style="padding:2em">
-       <form action="" method="POST">
-          <label><b>Name:</b></label>
-          <input type="text" name="name"/>
-          <br /><br />
-          <label><b>Address:</b></label>
-          <input type="text" name="address"/>
-          <br /><br />
-          <label><b>Username:</b></label>
-          <input type="text" name="username"/>
-          <br/><br />
-          <label><b>Password:</b></label>
-          <input type="password" name="password"/>
-          <br/><br />
-          <button type="submit">Register</button>
-       </form>
+      <label><b>Name:</b></label>
+      <input type="text" name="name"/>
+      <br /><br />
+      <label><b>Address:</b></label>
+      <input type="text" name="address"/>
+      <br /><br />
+      <label><b>Username:</b></label>
+      <input type="text" name="username"/>
+      <br/><br />
+      <label><b>Password:</b></label>
+      <input type="password" name="password"/>
+      <br/><br />
+      <button class="btn" style="width: 250" type="submit">Sign Up</button>
+    </form>
 
-       <div style="font-size:0.8em; color:red">
-         <?php if(isset($error)) echo $error; ?>
-       </div>
+  <div style="font-size:0.8em; color:red">
+    <?php if(isset($error)) echo $error; ?>
+  </div>
 
-    </div>
   </body>
 </html>
