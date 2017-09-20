@@ -12,16 +12,11 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   // creting new hash for new user
   $hash = password_hash($password, PASSWORD_DEFAULT);
   //inserting user into db
-  $sql = "INSERT INTO Users (name, address, username, password, hash)
-  VALUES (:name, :address, :username, :password, :hash)";
+  $sql = "INSERT INTO Users (name, address, username, hash)
+  VALUES (?,?,?,?)";
   $statement=$conn->prepare($sql);
-  $statement->execute(array(
-    ':name' => $name,
-    ':address' => $address,
-    ':username' => $username,
-    ':password' => $password,
-    ':hash' => $hash
-  ));
+  $statement->bind_param("ssss", $name,$address,$username,$hash);
+  $statement->execute();
 
   $_SESSION['username'] = $username;
   $_SESSION['logged_in'] = TRUE;
