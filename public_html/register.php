@@ -15,7 +15,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   $sql = "INSERT INTO Users (name, address, username, hash)
   VALUES (?,?,?,?)";
   $statement=$conn->prepare($sql);
-  $statement->bind_param($name,$address,$username,$hash);
+  $statement->bind_param("ssss", $name,$address,$username,$hash);
   $statement->execute();
 
   $_SESSION['username'] = $username;
