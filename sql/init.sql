@@ -6,11 +6,6 @@ DROP TABLE IF EXISTS Items;
 DROP TABLE IF EXISTS Orders;
 SET FOREIGN_KEY_CHECKS = 1;
 
--- Set increment settings --
-
-SET auto_increment_increment = 1;
-SET auto_increment_offset = 1;
-
 -- Create the tables --
 
 CREATE TABLE Users (

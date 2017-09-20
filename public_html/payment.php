@@ -23,7 +23,7 @@ if (!isset($_SESSION['logged_in'])) {
                 <br>
                 <?php echo "Att betala: <b>", $_SESSION["total_price"], "</b> kr <t>"; ?>
 								<br>
-                <button class="btn" onclick="createPayment()">Utför betalning</button>
+                <button class="btn" onclick="return createPayment()">Utför betalning</button>
             </form>
         </body>
         <script type='text/javascript'>
@@ -36,6 +36,7 @@ if (!isset($_SESSION['logged_in'])) {
             } else {
                 // Byta till kvitto när det är klart
                 window.location = '/store.php';
+								return false;
             }
         }
         </script>
