@@ -65,7 +65,7 @@ $cart = getCart($conn);
 			<p>
 				<b>Summa:</b> <?= $_SESSION["total_price"] ?>
 			</p>
-			<button class="btn" onClick="handlePayment()">Betala</button>
+			<button class="btn" onClick="return handlePayment()">Betala</button>
 
 		<?php } else { ?>
 
