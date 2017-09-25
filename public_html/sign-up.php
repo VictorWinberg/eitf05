@@ -10,8 +10,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   $error="";
 
   if(check($name, $address, $username, $password, $error)&&
-  checkLength($name, $address, $username, $password, $error)&&
-  checkPassword($password, $name, $username, $error)) {
+    checkLength($name, $address, $username, $password, $error)&&
+    checkPassword($password, $name, $username, $error)) {
     // creting new hash for new user
     $hash = password_hash($password, PASSWORD_DEFAULT);
     //inserting user into db
@@ -20,21 +20,23 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $statement=$conn->prepare($sql);
     $statement->bind_param("ssss", $name, $address, $username, $hash);
     $statement->execute();
+    //get $login_user from the database
     $statement = $conn->prepare("SELECT * FROM users WHERE username = ?");
     $statement->bind_param('s', $username);
     $statement->execute();
     $result = $statement->get_result();
     $statement->close();
-      $login_user = $result->fetch_assoc();
-      $_SESSION['login_user'] = $login_user;
-      $_SESSION['logged_in'] = TRUE;
-      header("location: store.php");
-
+    $login_user = $result->fetch_assoc();
+    //set SSSION user and that its signed in
+    $_SESSION['login_user'] = $login_user;
+    $_SESSION['logged_in'] = TRUE;
+    header("location: store.php");
   }
 }
-
+//Compare all input to blacklist.txt
 function check($name, $address, $username, $password, &$error) {
-  $myfile = fopen("/home/hanna/Documents/EITF05/eitf05/blacklist.txt", "r")
+  //opens blacklist file, only aallowed to read
+  $myfile = fopen("_DIR_ . '/blacklist.txt", "r")
   or die("Unable to open file!");
   // Output one line until end-of-file
   while(!feof($myfile)) {
@@ -47,10 +49,10 @@ function check($name, $address, $username, $password, &$error) {
       } else if($line==$address) {
         $error="Invalid address entered";
         return FALSE;
-      }else if($line==$username) {
+      } else if($line==$username) {
         $error="Invalid username entered";
         return FALSE;
-      }else if($line==$password) {
+      } else if($line==$password) {
         $error="Invalid password entered";
         return FALSE;
       }
@@ -59,13 +61,13 @@ function check($name, $address, $username, $password, &$error) {
   fclose($myfile);
   return TRUE;
 }
-
+//Check the length of name, address, username and password
 function checkLength($name, $address, $username, $password, &$error) {
   $n=trim($name);
   $a=trim($address);
   $u=trim($username);
   $p=trim($password);
-  // check for space in all and length in password
+  //Check if password is longer than eight characters and all others!=space
   if(strlen($n)==0) {
     $error="Invalid length of name entered";
     return FALSE;
@@ -81,11 +83,11 @@ function checkLength($name, $address, $username, $password, &$error) {
   }
   return TRUE;
  }
-
+//Check that password contains one digit, one upper- and lowercase letter
+//and a special character
 function checkPassword($password, $name, $username, &$error) {
   $passArr = str_split($password);
   $arr=array(0,0,0,0);
-  //check for one digit, upper- and lowercase letter, special character
   foreach ($passArr as $value) {
     if(ctype_digit($value)){
       $arr[0]=1;
@@ -103,11 +105,8 @@ function checkPassword($password, $name, $username, &$error) {
     lowercase letter or specialcharacter";
     return FALSE;
   }
-  //not the same password as name or username
+  //Check that the password does not contain the name or username
   if(strpos($password, $name)!==FALSE||strpos($password, $username)!==FALSE) {
-    echo $password;
-    echo $name;
-    echo $username;
     $error="Invalid password entered:\n
     Name or Username shall not be included in password";
     return FALSE;
