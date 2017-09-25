@@ -118,14 +118,13 @@ function checkPassword($password, $name, $username, &$error) {
 
 <html>
   <?php require('header.php') ?>
-  <div style="width: 500px; margin: 200px auto 0 auto;">
-  <head><title>Register Page</title></head>
-
+  <div style="width: 500px; margin: 30px auto 0 auto;">
+  <head><title>Signup Page</title></head>
   <body>
-    <h1>Register</h1>
-    <h4> </h4>
+    <h1 style="text-align:center">Ready to Spin and Drink Some Milk?</h1>
+    <h3 style="text-align:center">Sign Up!</h3>
     <div style="padding:2em">
-       <form  method="POST">
+       <form  class="form" action="" method="POST">
           <label><b>Name:</b></label>
           <input type="text" name="name" maxlength="40"/>
           <br /><br />
@@ -138,7 +137,7 @@ function checkPassword($password, $name, $username, &$error) {
           <label><b>Password:</b></label>
           <input type="password" name="password" maxlength="50"/>
           <br/><br />
-          <button type="submit">Register</button>
+          <button type="submit">Sign Up</button>
        </form>
 
        <div style="font-size:0.8em; color:red">
