@@ -18,16 +18,14 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO Users (name, address, username, hash)
     VALUES (?,?,?,?)";
     $statement=$conn->prepare($sql);
-    if(!$stmt->prepare($query)){
-      $error="Failed to prepare statement\n";
-    } else {
+
       $statement->bind_param("ssss", $name, $address, $username, $hash);
       $statement->execute();
 
       $_SESSION['username'] = $username;
       $_SESSION['logged_in'] = TRUE;
       header("location: store.php");
-    }
+
   }
 }
 
@@ -82,7 +80,7 @@ function checkLength($name, $address, $username, $password, &$error) {
 
 function checkPassword($password, &$error) {
   $passArr = str_split($password);
-  $arr;
+  $arr=array(0,0,0,0);
   //check for one digit, upper- and lowercase letter, special character
   foreach ($passArr as $value) {
     if(ctype_digit($value)){
@@ -91,7 +89,7 @@ function checkPassword($password, &$error) {
       $arr[1]=1;
     } else if(ctype_upper($value)){
       $arr[2]=1;
-    } else if(preg_match('/[\'^£$%&*()}{@#~?><>,|=_+¬-]/', $value)){
+    } else if(preg_match('/[\'^£$%&*()}{@#~?!"¤%€><>,|=_+¬-]/', $value)){
       $arr[3]=1;
     }
   }
@@ -124,19 +122,15 @@ function checkPassword($password, &$error) {
        <form  method="POST">
           <label><b>Name:</b></label>
           <input type="text" name="name" maxlength="40"/>
-          <input type="reset" value="Reset">
           <br /><br />
           <label><b>Address:</b></label>
           <input type="text" name="address" maxlength="40"/>
-          <input type="reset" value="Reset">
           <br /><br />
           <label><b>Username:</b></label>
           <input type="text" name="username" maxlength="40"/>
-          <input type="reset" value="Reset">
           <br/><br />
           <label><b>Password:</b></label>
           <input type="password" name="password" maxlength="50"/>
-          <input type="reset" value="Reset">
           <br/><br />
           <button type="submit">Register</button>
        </form>
