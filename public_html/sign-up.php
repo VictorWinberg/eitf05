@@ -36,26 +36,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 //Compare all input to blacklist.txt
 function check($name, $address, $username, $password, &$error) {
-  //opens blacklist file, only aallowed to read
+  //opens blacklist file, only allowed to read
   $myfile = fopen("../blacklist.txt", "r")
   or die("Unable to open file!");
   // Output one line until end-of-file
   while(!feof($myfile)) {
     $line=fgets($myfile);
     $line=trim($line);
-    $errors = array();
-    if(strlen($line)!=0) {
-      if($line==$name)
-        array_push($errors, "Name");
-      if($line==$address)
-        array_push($errors, "Address");
-      if($line==$username)
-        array_push($errors, "Username");
-      if($line==$password)
-        array_push($errors, "Password");
 
-      if(sizeof($errors) > 0) {
-        $error = join(', ', $errors) . " input(s) are not allowed";
+    if(strlen($line) != 0) {
+      if($line == $password) {
+        $error = "Password is unsafe and not allowed.";
         return FALSE;
       }
     }
