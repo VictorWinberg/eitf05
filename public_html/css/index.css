@@ -1,5 +1,11 @@
 /* GENERAL */
 
+@import url('https://fonts.googleapis.com/css?family=Open+Sans|Roboto');
+
+body {
+  font-family: 'Roboto', 'Open Sans', sans-serif;
+}
+
 td, th {
   text-align: left;
   padding: 0.5em;
@@ -43,4 +49,34 @@ tr:nth-child(even) {
 .navigationBar a.active {
     background-color: #3252b6;
     color: white;
+}
+
+.form {
+  margin: 80px auto;
+  width: 300px;
+  text-align: center;
+  color: DimGray;
+}
+
+input {
+  text-align: inherit;
+  background-color: WhiteSmoke;
+  border: 2px solid transparent;
+  font-size: 1em;
+  font-weight: lighter;
+  padding: 0.8em 0;
+  width: 250px;
+}
+
+.btn {
+  border: 2px solid transparent;
+  background: SteelBlue;
+  color: white;
+  font-size: 1em;
+  padding: 1em;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: LightSkyBlue;
 }

@@ -2,56 +2,57 @@
 session_start();
 
 require 'connect.php';
+$title = 'Login - Fidget Express';
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {      // Not sure about this check
-
-  // TODO: Use stripslashes and mysql_real_escape_string
+if($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $username = $_POST['username'];
   $password = $_POST['password'];
 
-  // TODO: Make safe, seems safe with mysqli?
-  $sql = "SELECT * FROM Users WHERE username = '$username'";
-  $result = $conn->query($sql);
-  $rows = mysqli_num_rows($result);
+  // Prepared statement
+  $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
 
-  if($rows == 1 && verifyPassword($password, $result->fetch_array()['hash'])) {
+  // Bind $username param as a string
+  $stmt->bind_param('s', $username);
+
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $stmt->close();
+
+  $login_user = $result->fetch_assoc();
+
+  if(password_verify($password, $login_user['hash'])) {
     session_regenerate_id();
-    $_SESSION['username'] = $username;
+    unset($login_user['hash']);
+
+    $_SESSION['login_user'] = $login_user;
     $_SESSION['logged_in'] = TRUE;
     $_SESSION['shopping_cart'] = array();
+
     header("location: store.php");
   } else {
-    $error = "Your Username and/or Password is invalid";
+    $error = "Ditt användarnamn och/eller lösenord är felaktigt";
   }
-}
-
-function verifyPassword($password, $hash) {
-  return password_verify($password, $hash);
 }
 ?>
 <html>
-  <head><title>Login Page</title></head>
+  <?php require('header.php') ?>
 
   <body>
-    <h1>Login</h1>
+    <form class="form" action="" method="POST">
+      <h1>Login</h1>
 
-    <div style="padding:2em">
-
-       <form action="" method="POST">
-          <label><b>Username:</b></label>
-          <input type="text" name="username"/>
-          <br /><br />
-          <label><b>Password:</b></label>
-          <input type="password" name="password"/>
-          <br/><br />
-          <button type="submit">Login</button>
-       </form>
-
-       <div style="font-size:0.8em; color:red">
-         <?php if(isset($error)) echo $error; ?>
-       </div>
-
-    </div>
+      <input type="text" name="username" placeholder="username">
+      <br/><br/>
+      <input type="password" name="password" placeholder="password">
+      <br/><br/>
+      <button class="btn" style="width: 250" type="submit">login</button>
+      <p style="font-size: 0.8em; color: DarkSlateGray">
+        Don't have an account? <a href="sign-up.php">Sign Up</a>
+      </p>
+      <p class="small" style="font-size: 0.8em; color:red">
+       <?php if(isset($error)) echo $error; ?>
+      </p>
+    </form>
   </body>
 </html>
