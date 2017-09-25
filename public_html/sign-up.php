@@ -104,7 +104,10 @@ function checkPassword($password, $name, $username, &$error) {
     return FALSE;
   }
   //not the same password as name or username
-  if(!strpos($password, $name)||!strpos($password, $username)) {
+  if(strpos($password, $name)!==FALSE||strpos($password, $username)!==FALSE) {
+    echo $password;
+    echo $name;
+    echo $username;
     $error="Invalid password entered:\n
     Name or Username shall not be included in password";
     return FALSE;
