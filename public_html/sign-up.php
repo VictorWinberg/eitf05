@@ -100,15 +100,13 @@ function checkPassword($password, &$error) {
     return FALSE;
   }
   //not the same password as name or username
-  if(preg_match('/\b($name\w+)\b/', $password, $matches) ||
-  preg_match('/\b($username\w+)\b/', $password, $matches)) {
+  if(!strpos($password, $name)||!strpos($password, $username)) {
     $error="Invalid password entered:\n
     Name or Username shall not be included in password";
     return FALSE;
   }
   return TRUE;
 }
-
 ?>
 
 <html>
