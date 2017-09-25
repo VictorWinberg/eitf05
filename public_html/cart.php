@@ -76,7 +76,7 @@ $cart = getCart($conn);
 	</body>
 	<script type='text/javascript'>
 		function handlePayment() {
-			window.location = '/payment.php';
+			window.location = 'payment.php';
 			return false;
 		}
 	</script>

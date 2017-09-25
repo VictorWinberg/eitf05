@@ -15,6 +15,40 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 
+.form {
+  margin: 80px auto;
+  width: 300px;
+  text-align: center;
+  color: DimGray;
+}
+
+input {
+  text-align: inherit;
+  background-color: WhiteSmoke;
+  border: 2px solid transparent;
+  font-size: 1em;
+  font-weight: lighter;
+  padding: 0.8em 0;
+  width: 250px;
+}
+
+.btn {
+  border: 2px solid transparent;
+  background: SteelBlue;
+  color: white;
+  font-size: 1em;
+  padding: 1em;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: LightSkyBlue;
+}
+
+p.error {
+	color: #f02f2f;
+}
+
 /* NAVIGATION BAR */
 
 /* Add background color to the navigation bar */
@@ -47,36 +81,6 @@ tr:nth-child(even) {
 
 /* Add a color to the active/current link */
 .navigationBar a.active {
-    background-color: #3252b6;
+    background-color: #27ae60;
     color: white;
-}
-
-.form {
-  margin: 80px auto;
-  width: 300px;
-  text-align: center;
-  color: DimGray;
-}
-
-input {
-  text-align: inherit;
-  background-color: WhiteSmoke;
-  border: 2px solid transparent;
-  font-size: 1em;
-  font-weight: lighter;
-  padding: 0.8em 0;
-  width: 250px;
-}
-
-.btn {
-  border: 2px solid transparent;
-  background: SteelBlue;
-  color: white;
-  font-size: 1em;
-  padding: 1em;
-  cursor: pointer;
-}
-
-.btn:hover {
-  background-color: LightSkyBlue;
 }
