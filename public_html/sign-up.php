@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 require 'connect.php';
 $title = 'Sign Up - Fidget Express';
 
@@ -8,7 +9,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   $address = $_POST['address'];
   $username = $_POST['username'];
   $password = $_POST['password'];
-  $error="";
 
   if(check($name, $address, $username, $password, $error)&&
     checkLength($name, $address, $username, $password, $error)&&
