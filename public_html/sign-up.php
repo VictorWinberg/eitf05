@@ -1,8 +1,8 @@
 <?php
-
 session_start();
 require 'connect.php';
 $title = 'Sign Up - Fidget Express';
+
 if($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = $_POST['name'];
   $address = $_POST['address'];
@@ -37,24 +37,25 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 //Compare all input to blacklist.txt
 function check($name, $address, $username, $password, &$error) {
   //opens blacklist file, only aallowed to read
-  $myfile = fopen("_DIR_ . '/blacklist.txt", "r")
+  $myfile = fopen("../blacklist.txt", "r")
   or die("Unable to open file!");
   // Output one line until end-of-file
   while(!feof($myfile)) {
     $line=fgets($myfile);
     $line=trim($line);
+    $errors = array();
     if(strlen($line)!=0) {
-      if($line==$name) {
-        $error="Invalid name entered";
-        return FALSE;
-      } else if($line==$address) {
-        $error="Invalid address entered";
-        return FALSE;
-      } else if($line==$username) {
-        $error="Invalid username entered";
-        return FALSE;
-      } else if($line==$password) {
-        $error="Invalid password entered";
+      if($line==$name)
+        array_push($errors, "Name");
+      if($line==$address)
+        array_push($errors, "Address");
+      if($line==$username)
+        array_push($errors, "Username");
+      if($line==$password)
+        array_push($errors, "Password");
+
+      if(sizeof($errors) > 0) {
+        $error = join(', ', $errors) . " input(s) are not allowed";
         return FALSE;
       }
     }
@@ -64,22 +65,19 @@ function check($name, $address, $username, $password, &$error) {
 }
 //Check the length of name, address, username and password
 function checkLength($name, $address, $username, $password, &$error) {
-  $n=trim($name);
-  $a=trim($address);
-  $u=trim($username);
-  $p=trim($password);
-  //Check if password is longer than eight characters and all others!=space
-  if(strlen($n)==0) {
-    $error="Invalid length of name entered";
-    return FALSE;
-  }else if(strlen($a)==0) {
-    $error="Invalid length of address entered";
-    return FALSE;
-  }else if(strlen($u)==0) {
-    $error="Invalid length of username entered";
-    return FALSE;
-  } else if(strlen($p)<8) {
-    $error="Invalid length of password entered";
+  //Check if password is longer than eight characters and all others is not empty
+  $errors = array();
+  if(strlen(trim($password))<8)
+    array_push($errors, "Length of password must be greater or equal to 8. Password");
+  if(strlen(trim($name))==0)
+    array_push($errors, "Name");
+  if(strlen(trim($address))==0)
+    array_push($errors, "Adress");
+  if(strlen(trim($username))==0)
+    array_push($errors, "Username");
+
+  if (sizeof($errors) > 0) {
+    $error = join(', ', $errors) . " are required and should not be empty.";
     return FALSE;
   }
   return TRUE;
@@ -118,33 +116,29 @@ function checkPassword($password, $name, $username, &$error) {
 
 <html>
   <?php require('header.php') ?>
-  <div style="width: 500px; margin: 30px auto 0 auto;">
-  <head><title>Signup Page</title></head>
+
   <body>
-    <h1 style="text-align:center">Ready to Spin and Drink Some Milk?</h1>
-    <h3 style="text-align:center">Sign Up!</h3>
-    <div style="padding:2em">
-       <form  class="form" action="" method="POST">
-          <label><b>Name:</b></label>
-          <input type="text" name="name" maxlength="40"/>
-          <br /><br />
-          <label><b>Address:</b></label>
-          <input type="text" name="address" maxlength="40"/>
-          <br /><br />
-          <label><b>Username:</b></label>
-          <input type="text" name="username" maxlength="40"/>
-          <br/><br />
-          <label><b>Password:</b></label>
-          <input type="password" name="password" maxlength="50"/>
-          <br/><br />
-          <button type="submit">Sign Up</button>
-       </form>
+    <form class="form" action="" method="POST">
+      <h1>Ready to Spin and Drink Some Milk?</h1>
+      <h1>Sign Up!</h1>
 
-       <div style="font-size:0.8em; color:red">
-         <?php if(isset($error)) echo $error; ?>
-       </div>
+      <label><b>Name:</b></label>
+      <input type="text" name="name" maxlength="40"/>
+      <br /><br />
+      <label><b>Address:</b></label>
+      <input type="text" name="address" maxlength="40"/>
+      <br /><br />
+      <label><b>Username:</b></label>
+      <input type="text" name="username" maxlength="40"/>
+      <br/><br />
+      <label><b>Password:</b></label>
+      <input type="password" name="password" maxlength="50"/>
+      <br/><br />
+      <button class="btn" style="width: 250" type="submit">Sign Up</button>
 
-    </div>
+      <div style="font-size:0.8em; color:red">
+        <?php if(isset($error)) echo $error; ?>
+      </div>
+    </form>
   </body>
-  </div>
 </html>
