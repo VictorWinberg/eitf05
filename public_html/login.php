@@ -47,6 +47,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       <input type="password" name="password" placeholder="password">
       <br/><br/>
       <button class="btn" style="width: 250" type="submit">login</button>
+
       <p style="font-size: 0.8em; color: DarkSlateGray">
         Don't have an account? <a href="sign-up.php">Sign Up</a>
       </p>

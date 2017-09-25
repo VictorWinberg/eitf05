@@ -119,26 +119,25 @@ function checkPassword($password, $name, $username, &$error) {
 
   <body>
     <form class="form" action="" method="POST">
-      <h1>Ready to Spin and Drink Some Milk?</h1>
+      <h3>Ready to Spin and Drink Some Milk?</h3>
       <h1>Sign Up!</h1>
 
-      <label><b>Name:</b></label>
-      <input type="text" name="name" maxlength="40"/>
+      <input type="text" name="name" placeholder="name" maxlength="40"/>
       <br /><br />
-      <label><b>Address:</b></label>
-      <input type="text" name="address" maxlength="40"/>
+      <input type="text" name="address" placeholder="address" maxlength="40"/>
       <br /><br />
-      <label><b>Username:</b></label>
-      <input type="text" name="username" maxlength="40"/>
+      <input type="text" name="username" placeholder="username" maxlength="40"/>
       <br/><br />
-      <label><b>Password:</b></label>
-      <input type="password" name="password" maxlength="50"/>
+      <input type="password" name="password" placeholder="password" maxlength="50"/>
       <br/><br />
-      <button class="btn" style="width: 250" type="submit">Sign Up</button>
+      <button class="btn" style="width: 250" type="submit">sign up</button>
 
-      <div style="font-size:0.8em; color:red">
-        <?php if(isset($error)) echo $error; ?>
-      </div>
+      <p style="font-size: 0.8em; color: DarkSlateGray">
+        Already have an account? <a href="login.php">Login</a>
+      </p>
+      <p class="small" style="font-size: 0.8em; color:red">
+       <?php if(isset($error)) echo $error; ?>
+      </p>
     </form>
   </body>
 </html>
