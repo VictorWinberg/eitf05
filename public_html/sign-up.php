@@ -11,18 +11,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if(check($name, $address, $username, $password, $error)&&
   checkLength($name, $address, $username, $password, $error)&&
-  checkPassword($password, $error)) {
+  checkPassword($password, $name, $username, $error)) {
     // creting new hash for new user
     $hash = password_hash($password, PASSWORD_DEFAULT);
     //inserting user into db
     $sql = "INSERT INTO Users (name, address, username, hash)
     VALUES (?,?,?,?)";
     $statement=$conn->prepare($sql);
-
-      $statement->bind_param("ssss", $name, $address, $username, $hash);
-      $statement->execute();
-
-      $_SESSION['username'] = $username;
+    $statement->bind_param("ssss", $name, $address, $username, $hash);
+    $statement->execute();
+    $statement = $conn->prepare("SELECT * FROM users WHERE username = ?");
+    $statement->bind_param('s', $username);
+    $statement->execute();
+    $result = $statement->get_result();
+    $statement->close();
+      $login_user = $result->fetch_assoc();
+      $_SESSION['login_user'] = $login_user;
       $_SESSION['logged_in'] = TRUE;
       header("location: store.php");
 
@@ -78,7 +82,7 @@ function checkLength($name, $address, $username, $password, &$error) {
   return TRUE;
  }
 
-function checkPassword($password, &$error) {
+function checkPassword($password, $name, $username, &$error) {
   $passArr = str_split($password);
   $arr=array(0,0,0,0);
   //check for one digit, upper- and lowercase letter, special character
