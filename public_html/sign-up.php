@@ -2,6 +2,7 @@
 
 session_start();
 require 'connect.php';
+$title = 'Sign Up - Fidget Express';
 if($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = $_POST['name'];
   $address = $_POST['address'];
@@ -12,7 +13,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   if(check($name, $address, $username, $password, $error)&&
     checkLength($name, $address, $username, $password, $error)&&
     checkPassword($password, $name, $username, $error)) {
-    // creting new hash for new user
+    // creating new hash for new user
     $hash = password_hash($password, PASSWORD_DEFAULT);
     //inserting user into db
     $sql = "INSERT INTO Users (name, address, username, hash)
@@ -116,6 +117,7 @@ function checkPassword($password, $name, $username, &$error) {
 ?>
 
 <html>
+  <?php require('header.php') ?>
   <div style="width: 500px; margin: 200px auto 0 auto;">
   <head><title>Register Page</title></head>
 
