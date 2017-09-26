@@ -31,6 +31,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             //set SESSION user and that its signed in
             $_SESSION['login_user'] = $login_user;
             $_SESSION['logged_in'] = TRUE;
+            $_SESSION['shopping_cart'] = array();
             header("location: store.php");
           } else {
             $error="unable to execute mysqli query";
