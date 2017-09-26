@@ -12,6 +12,9 @@ if (!isset($_SESSION['logged_in'])) {
 $method = $_SERVER["REQUEST_METHOD"];
 
 if($method == "POST") {
+	if (!isset($_SESSION['logged_in'])) {
+	exit();
+	}
 	$action = $_POST['action'];
 	$name = htmlspecialchars($_POST['name']);
 
