@@ -13,7 +13,8 @@ if (!isset($_SESSION['logged_in'])) {
 <?php
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 	if (!isset($_SESSION['logged_in'])) {
-	exit();
+		exit();
+	}
 }
 // Update the item quantity in the shopping cart
 if (isset($_POST['quantity'])) {
