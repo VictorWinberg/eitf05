@@ -5,10 +5,10 @@ require 'connect.php';
 $title = 'Sign Up - Fidget Express';
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-  $name = $_POST['name'];
-  $address = $_POST['address'];
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+  $name = htmlspecialchars($_POST['name']);
+  $address = htmlspecialchars($_POST['address']);
+  $username = htmlspecialchars($_POST['username']);
+  $password = htmlspecialchars($_POST['password']);
 
   if(check($name, $address, $username, $password, $error)&&
     checkLength($name, $address, $username, $password, $error)&&
