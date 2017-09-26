@@ -37,7 +37,7 @@ function show_table($conn, $sql, $name) {
   <?php require_once('header.php'); ?>
   <body>
     <h1>Web Shop Under Attack</h1>
-    <h3>Host: <?=$server?></h3>
+    <h3>Host: <?=$conn->host_info?></h3>
     <h2>Tables</h2>
     <?php
       $tables = $conn->query('SHOW TABLES');
