@@ -11,7 +11,11 @@ if (!isset($_SESSION['logged_in'])) {
 ?>
 
 <?php
-
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+	if (!isset($_SESSION['logged_in'])) {
+	exit();
+}
+}
 // Add items to shopping cart
 if (isset($_POST['add'])) {
 	foreach ($_POST['itemIds'] as $itemId => $quantity) {
