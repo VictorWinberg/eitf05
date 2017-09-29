@@ -16,8 +16,10 @@ if (!isset($_SESSION['logged_in'])) {
 
 $error = false;
 $cart = array();
-if (isset($_POST["pay"])) {
-
+if (isset($_POST["pay"]) && isset($_SESSION['csrf_token']) && isset($_POST['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']) {
+	if (!isset($_SESSION['logged_in'])) {
+		exit();
+	}
 	// Adding a 10 percent failure rate on payment
 	if (rand(1, 100)<= 10) {
 		$error = true;
@@ -67,7 +69,8 @@ if (isset($_POST["pay"])) {
                 <button class="btn" name="pay">Utför betalning</button>
                 <p class="error">
                 	<?= $error ? "Din betalning lyckades ej. Var god försök igen!" : ""; ?>
-                </p>
+				</p>
+				<input type="hidden" name="csrf_token" value="<? echo $_SESSION['csrf_token'] ?>">	
             </form>
 
         <?php } else { ?>

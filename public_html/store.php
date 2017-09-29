@@ -11,22 +11,22 @@ if (!isset($_SESSION['logged_in'])) {
 ?>
 
 <?php
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['csrf_token']) && isset($_POST['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']) {
 	if (!isset($_SESSION['logged_in'])) {
-	exit();
-}
-}
-// Add items to shopping cart
-if (isset($_POST['add'])) {
-	foreach ($_POST['itemIds'] as $itemId => $quantity) {
-		if ($quantity == 0) {
-			continue;
-		}
-		$_SESSION['shopping_cart'][$itemId] = isset($_SESSION['shopping_cart'][$itemId]) ? $_SESSION['shopping_cart'][$itemId] + $quantity : $quantity;
+		exit();
 	}
-	updateTotalPrice($conn);
-}
 
+	// Add items to shopping cart
+	if (isset($_POST['add'])) {
+		foreach ($_POST['itemIds'] as $itemId => $quantity) {
+			if ($quantity == 0) {
+				continue;
+			}
+			$_SESSION['shopping_cart'][$itemId] = isset($_SESSION['shopping_cart'][$itemId]) ? $_SESSION['shopping_cart'][$itemId] + $quantity : $quantity;
+		}
+		updateTotalPrice($conn);
+	}
+}
 ?>
 
 <!-- Get items from database -->
@@ -57,6 +57,7 @@ if (isset($_POST['add'])) {
 			</table>
 			<br/>
 			<button class="btn" type="submit" name="add">Lägg till i varukorgen</button>
+			<input type="hidden" name="csrf_token" value="<? echo $_SESSION['csrf_token'] ?>">	
 		</form>
 
 	</body>

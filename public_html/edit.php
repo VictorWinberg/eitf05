@@ -10,10 +10,9 @@ if (!isset($_SESSION['logged_in'])) {
 <?php
 
 $method = $_SERVER["REQUEST_METHOD"];
-
-if($method == "POST") {
+if($method == "POST" && isset($_SESSION['csrf_token']) && isset($_POST['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']) {
 	if (!isset($_SESSION['logged_in'])) {
-	exit();
+		exit();
 	}
 	$action = $_POST['action'];
 	$name = htmlspecialchars($_POST['name']);
@@ -54,6 +53,7 @@ if($method == "POST") {
 		<h3>Lägg till produkt</h3>
 
 		<form action="" method="POST">
+			<input type="hidden" name="csrf_token" value="<? echo $_SESSION['csrf_token'] ?>">	
 			 <input type="hidden" name="action" value="ADD">
 			 <label><b>Namn:</b></label>
 			 <input type="text" name="name"/>
@@ -67,6 +67,7 @@ if($method == "POST") {
 		<h3>Ta bort produkt</h3>
 
 		<form action="" method="POST">
+			<input type="hidden" name="csrf_token" value="<? echo $_SESSION['csrf_token'] ?>">	
 			 <input type="hidden" name="action" value="DELETE">
 			 <label><b>Namn:</b></label>
 			 <input type="text" name="name"/>

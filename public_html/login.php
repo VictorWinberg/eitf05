@@ -24,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   if(password_verify($password, $login_user['hash'])) {
     session_regenerate_id();
     unset($login_user['hash']);
-
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     $_SESSION['login_user'] = $login_user;
     $_SESSION['logged_in'] = TRUE;
     $_SESSION['shopping_cart'] = array();
