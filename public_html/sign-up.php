@@ -1,10 +1,13 @@
 <?php
 session_start();
+if (!isset($_SESSION['csrf_token'])) {
+  $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
 
 require 'connect.php';
 $title = 'Sign Up - Fidget Express';
 
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+if($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_SESSION['csrf_token']) && isset($_POST['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']) {
   $name = $_POST['name'];
   $address = $_POST['address'];
   $username = $_POST['username'];
@@ -127,8 +130,9 @@ function checkPassword($password, $name, $username, &$error) {
         Already have an account? <a href="login.php">Login</a>
       </p>
       <p class="small" style="font-size: 0.8em; color:red">
-       <?php if(isset($error)) echo $error; ?>
+        <?php if(isset($error)) echo $error; ?>
       </p>
+      <input type="hidden" name="csrf_token" value="<? echo $_SESSION['csrf_token'] ?>">	
     </form>
   </body>
 </html>
