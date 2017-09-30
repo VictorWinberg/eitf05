@@ -7,7 +7,6 @@ if (!isset($_SESSION['csrf_token'])) {
 require 'connect.php';
 $title = 'Sign Up - Fidget Express';
 
-
 if($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_SESSION['csrf_token']) && isset($_POST['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']) {
   $name = htmlspecialchars($_POST['name']);
   $address = htmlspecialchars($_POST['address']);
