@@ -57,7 +57,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['csrf_token']) && iss
 			</table>
 			<br/>
 			<button class="btn" type="submit" name="add">Lägg till i varukorgen</button>
-			<input type="hidden" name="csrf_token" value="<? echo $_SESSION['csrf_token'] ?>">	
+			<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">	
 		</form>
 
 	</body>
