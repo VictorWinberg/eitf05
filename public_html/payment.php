@@ -69,8 +69,8 @@ if (isset($_POST["pay"]) && isset($_SESSION['csrf_token']) && isset($_POST['csrf
                 <button class="btn" name="pay">Utför betalning</button>
                 <p class="error">
                 	<?= $error ? "Din betalning lyckades ej. Var god försök igen!" : ""; ?>
-				</p>
-				<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">	
+                </p>
+		<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">	
             </form>
 
         <?php } else { ?>
