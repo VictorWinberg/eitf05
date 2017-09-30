@@ -7,11 +7,12 @@ if (!isset($_SESSION['csrf_token'])) {
 require 'connect.php';
 $title = 'Sign Up - Fidget Express';
 
+
 if($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_SESSION['csrf_token']) && isset($_POST['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']) {
-  $name = $_POST['name'];
-  $address = $_POST['address'];
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+  $name = htmlspecialchars($_POST['name']);
+  $address = htmlspecialchars($_POST['address']);
+  $username = htmlspecialchars($_POST['username']);
+  $password = htmlspecialchars($_POST['password']);
 
   if(check($name, $address, $username, $password, $error)&&
     checkLength($name, $address, $username, $password, $error)&&
@@ -21,20 +22,34 @@ if($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_SESSION['csrf_token']) && is
     //inserting user into db
     $sql = "INSERT INTO Users (name, address, username, hash)
     VALUES (?,?,?,?)";
-    $statement=$conn->prepare($sql);
-    $statement->bind_param("ssss", $name, $address, $username, $hash);
-    $statement->execute();
-    //get $login_user from the database
-    $statement = $conn->prepare("SELECT * FROM users WHERE username = ?");
-    $statement->bind_param('s', $username);
-    $statement->execute();
-    $result = $statement->get_result();
-    $statement->close();
-    $login_user = $result->fetch_assoc();
-    //set SSSION user and that its signed in
-    $_SESSION['login_user'] = $login_user;
-    $_SESSION['logged_in'] = TRUE;
-    header("location: store.php");
+    if($statement=$conn->prepare($sql)) {
+      $statement->bind_param("ssss", $name, $address, $username, $hash);
+      if($statement->execute()) {
+        //get $login_user from the database
+        if($statement = $conn->prepare("SELECT * FROM users WHERE username = ?")) {
+          $statement->bind_param('s', $username);
+          if($statement->execute()) {
+            $result = $statement->get_result();
+            $statement->close();
+            $login_user = $result->fetch_assoc();
+            //set SESSION user and that its signed in
+            $_SESSION['login_user'] = $login_user;
+            $_SESSION['logged_in'] = TRUE;
+            $_SESSION['shopping_cart'] = array();
+            header("location: store.php");
+          } else {
+            $error="unable to execute mysqli query";
+          }
+        } else {
+          $error="unable to prepare mysqli query";
+        }
+      } else {
+        $error="Username already exists";
+      }
+    } else {
+      $error="unable to prepare mysqli query";
+    }
+
   }
 }
 //Compare all input to blacklist.txt
