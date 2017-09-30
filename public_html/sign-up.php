@@ -132,7 +132,7 @@ function checkPassword($password, $name, $username, &$error) {
       <p class="small" style="font-size: 0.8em; color:red">
         <?php if(isset($error)) echo $error; ?>
       </p>
-      <input type="hidden" name="csrf_token" value="<? echo $_SESSION['csrf_token'] ?>">	
+      <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">	
     </form>
   </body>
 </html>
