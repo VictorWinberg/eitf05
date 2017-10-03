@@ -47,7 +47,7 @@ if (isset($_POST['add'])) {
 					<tr>
 						<td><?= $item['name'] ?></td>
 						<td><?= $item['price'] ?></td>
-						<td><input type="number" name="itemIds[<?= $item['id'] ?>]" value=0></td>
+						<td><input type="number" min="0" name="itemIds[<?= $item['id'] ?>]" value=0></td>
 					</tr>
 				<?php } ?>
 			</table>
