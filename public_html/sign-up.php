@@ -136,6 +136,8 @@ function checkPassword($password, $name, $username, &$error) {
       <br /><br />
       <input type="text" name="username" placeholder="username" maxlength="40"/>
       <br/><br />
+      <i><span style="font-size: 11px;"> Password must be equal or longer than 8 characters and must include: 0-9, a-z, A-Z and a special character.</span></i>
+      <br/><br />
       <input type="password" name="password" placeholder="password" maxlength="50"/>
       <br/><br />
       <button class="btn" style="width: 250" type="submit">sign up</button>
