@@ -6,8 +6,8 @@ $title = 'Login - Fidget Express';
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  $username = $_POST['username'];
-  $password = $_POST['password'];
+  $username = htmlspecialchars($_POST['username']);
+  $password = htmlspecialchars($_POST['password']);
 
   // Prepared statement
   $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
@@ -24,7 +24,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
   if(password_verify($password, $login_user['hash'])) {
     session_regenerate_id();
     unset($login_user['hash']);
-
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
     $_SESSION['login_user'] = $login_user;
     $_SESSION['logged_in'] = TRUE;
     $_SESSION['shopping_cart'] = array();

@@ -11,25 +11,26 @@ if (!isset($_SESSION['logged_in'])) {
 ?>
 
 <?php
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['csrf_token']) && isset($_POST['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']) {
 	if (!isset($_SESSION['logged_in'])) {
-	exit();
-}
-// Update the item quantity in the shopping cart
-if (isset($_POST['quantity'])) {
-	$_SESSION['shopping_cart'][$_POST['itemId']] = $_POST['quantity'];
-	updateTotalPrice($conn);
-}
+		exit();
+	}
 
-// Remove the item from the shopping cart
-if (isset($_POST['remove'])) {
-	unset($_SESSION['shopping_cart'][$_POST['itemId']]);
-	updateTotalPrice($conn);
-}
+	// Update the item quantity in the shopping cart
+	if (isset($_POST['quantity'])) {
+		$_SESSION['shopping_cart'][$_POST['itemId']] = $_POST['quantity'];
+		updateTotalPrice($conn);
+	}
 
+	// Remove the item from the shopping cart
+	if (isset($_POST['remove'])) {
+		unset($_SESSION['shopping_cart'][$_POST['itemId']]);
+		updateTotalPrice($conn);
+	}
+
+}
 // Get shopping cart array
 $cart = getCart($conn);
-
 ?>
 
 <html>
@@ -56,11 +57,13 @@ $cart = getCart($conn);
 						<form method="post">
 							<td><input type="number" name="quantity" value="<?= $item['quantity'] ?>"></td>
 							<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
+							<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">	
 						</form>
 						<td><?= $item['price'] * $item['quantity'] ?></td>
 						<form method="post">
 							<td><button type="submit" name="remove">Ta bort</button></td>
 							<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
+							<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">	
 						</form>
 					</tr>
 				<?php } ?>
