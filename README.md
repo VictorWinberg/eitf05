@@ -32,3 +32,9 @@ error_reporting = E_ALL
 display_errors = On
 ```
 
+### Protect against Remote File Injections
+
+in php.ini, set allow_url_fopen=Off and allow_url_include = Off
+
+This stops other sites to include scripts which inserts file into our site.
+
