@@ -10,6 +10,7 @@ if (!isset($_SESSION['logged_in'])) {
 <?php
 
 $method = $_SERVER["REQUEST_METHOD"];
+
 if($method == "POST" && isset($_SESSION['csrf_token']) && isset($_POST['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']) {
 	if (!isset($_SESSION['logged_in'])) {
 		exit();
