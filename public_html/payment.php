@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['logged_in'])) {
-	header("location: login.php");
+	header("location: index.php");
 } else if (!isset($_SESSION["total_price"]) || $_SESSION["total_price"] == "0"){
     header("location: store.php");
 }
@@ -70,7 +70,7 @@ if (isset($_POST["pay"]) && isset($_SESSION['csrf_token']) && isset($_POST['csrf
                 <p class="error">
                 	<?= $error ? "Din betalning lyckades ej. Var god försök igen!" : ""; ?>
                 </p>
-		<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">	
+		<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
             </form>
 
         <?php } else { ?>

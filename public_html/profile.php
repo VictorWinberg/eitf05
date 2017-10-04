@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['logged_in'])) {
-	header("location: login.php");
+	header("location: index.php");
 }
 $LOGIN_USER = $_SESSION['login_user'];
 $username = $LOGIN_USER['username'];

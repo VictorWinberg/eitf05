@@ -143,12 +143,12 @@ function checkPassword($password, $name, $username, &$error) {
       <button class="btn" style="width: 250" type="submit">sign up</button>
 
       <p style="font-size: 0.8em; color: DarkSlateGray">
-        Already have an account? <a href="login.php">Login</a>
+        Already have an account? <a href="index.php">Login</a>
       </p>
       <p class="small" style="font-size: 0.8em; color:red">
         <?php if(isset($error)) echo $error; ?>
       </p>
-      <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">	
+      <input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
     </form>
   </body>
 </html>
