@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['logged_in'])) {
-	header("location: login.php");
+	header("location: index.php");
 }
 ?>
 
@@ -54,7 +54,7 @@ if($method == "POST" && isset($_SESSION['csrf_token']) && isset($_POST['csrf_tok
 		<h3>Lägg till produkt</h3>
 
 		<form action="" method="POST">
-			<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">	
+			<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 			 <input type="hidden" name="action" value="ADD">
 			 <label><b>Namn:</b></label>
 			 <input type="text" name="name"/>
@@ -68,7 +68,7 @@ if($method == "POST" && isset($_SESSION['csrf_token']) && isset($_POST['csrf_tok
 		<h3>Ta bort produkt</h3>
 
 		<form action="" method="POST">
-			<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">	
+			<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 			 <input type="hidden" name="action" value="DELETE">
 			 <label><b>Namn:</b></label>
 			 <input type="text" name="name"/>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['logged_in'])) {
-	header("location: login.php");
+	header("location: index.php");
 }
 ?>
 
@@ -58,7 +58,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['csrf_token']) && iss
 			</table>
 			<br/>
 			<button class="btn" type="submit" name="add">Lägg till i varukorgen</button>
-			<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">	
+			<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 		</form>
 
 	</body>

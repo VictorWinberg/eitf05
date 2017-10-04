@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['logged_in'])) {
-	header("location: login.php");
+	header("location: index.php");
 }
 ?>
 
@@ -58,13 +58,13 @@ $cart = getCart($conn);
 						<form method="post">
 							<td><input type="number" name="quantity" value="<?= $item['quantity'] ?>"></td>
 							<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
-							<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">	
+							<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 						</form>
 						<td><?= $item['price'] * $item['quantity'] ?></td>
 						<form method="post">
 							<td><button type="submit" name="remove">Ta bort</button></td>
 							<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
-							<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">	
+							<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 						</form>
 					</tr>
 				<?php } ?>
