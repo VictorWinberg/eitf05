@@ -8,10 +8,10 @@ require 'connect.php';
 $title = 'Sign Up - Fidget Express';
 
 if($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_SESSION['csrf_token']) && isset($_POST['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']) {
-  $name = htmlspecialchars($_POST['name']);
-  $address = htmlspecialchars($_POST['address']);
-  $username = htmlspecialchars($_POST['username']);
-  $password = htmlspecialchars($_POST['password']);
+  $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
+  $address = htmlspecialchars($_POST['address'], ENT_QUOTES);
+  $username = htmlspecialchars($_POST['username'], ENT_QUOTES);
+  $password = htmlspecialchars($_POST['password'], ENT_QUOTES);
 
   if(check($name, $address, $username, $password, $error)&&
     checkLength($name, $address, $username, $password, $error)&&
