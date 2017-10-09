@@ -6,8 +6,8 @@ $title = 'Login - Fidget Express';
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  $username = htmlspecialchars($_POST['username']);
-  $password = htmlspecialchars($_POST['password']);
+  $username = htmlspecialchars($_POST['username'], ENT_QUOTES);
+  $password = htmlspecialchars($_POST['password'], ENT_QUOTES);
 
   // Prepared statement
   $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
