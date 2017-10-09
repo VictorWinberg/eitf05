@@ -33,6 +33,14 @@ CREATE TABLE Orders (
 	FOREIGN KEY		(userId) REFERENCES Users(id),
 	FOREIGN KEY		(itemId) REFERENCES Items(id)
 );
+CREATE TABLE Reviews (
+		id				INTEGER NOT NULL AUTO_INCREMENT,
+		name 			varchar(255) NOT NULL,
+		subject		varchar(255) NOT NULL,
+		review		varchar(255) NOT NULL,
+		ts 				TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+		PRIMARY KEY		(id)
+);
 
 -- Insert data into the tables --
 
