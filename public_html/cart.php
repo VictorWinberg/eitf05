@@ -50,17 +50,19 @@ $cart = getCart($conn);
 					<th>Á-pris</th>
 					<th>Antal</th>
 					<th>Totalt</th>
+					<th></th>
 				</tr>
 				<?php foreach($cart as $item) { ?>
 					<tr>
 						<td><?= $item['name'] ?></td>
 						<td><?= $item['price'] ?></td>
 						<form method="post">
-							<td><input type="number" name="quantity" value="<?= $item['quantity'] ?>"></td>
+							<td><input type="number" min="0" name="quantity" value="<?= $item['quantity'] ?>"></td>
 							<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
 							<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
+							<td><?= $item['price'] * $item['quantity'] ?></td>
+							<td><button type="submit" /> Uppdatera </button> </td>
 						</form>
-						<td><?= $item['price'] * $item['quantity'] ?></td>
 						<form method="post">
 							<td><button type="submit" name="remove">Ta bort</button></td>
 							<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
