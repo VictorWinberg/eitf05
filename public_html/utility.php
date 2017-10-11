@@ -43,4 +43,22 @@ function updateTotalPrice($conn) {
 
 }
 
+function getReviews($conn) {
+
+  // Get reviews
+  $result = $conn->query('SELECT *
+                FROM Reviews
+                GROUP BY id');
+
+  // Create reviews
+  $reviews = array();
+  if ($result) {
+    while ($row = $result->fetch_assoc()) {
+      $reviews[] = $row;
+    }
+  }
+  return $reviews;
+
+}
+
 ?>
