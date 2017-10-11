@@ -4,6 +4,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS Users;
 DROP TABLE IF EXISTS Items;
 DROP TABLE IF EXISTS Orders;
+DROP TABLE IF EXISTS Reviews;
 SET FOREIGN_KEY_CHECKS = 1;
 
 -- Create the tables --
@@ -62,3 +63,8 @@ VALUES  		('2017-08-02 10:11:22', 1, 2),
 				('2017-08-12 15:23:47', 2, 2),
 				('2017-09-01 00:11:03', 2, 3),
 				('2017-09-12 12:34:11', 3, 1);
+
+INSERT INTO   	Reviews (name, subject, review)
+VALUES  		('Hanna Lindwall', '10/10', 'This is a great site!'),
+				('Victor Winberg', 'Could be better', 'The webshop has a good selection of products but lacks atmophere.'),
+				('H4ck3rAn2n', 'Design is awful!', '&lt;span style=&quot;color:red&quot;&gt;My webshop has a much C00L3R design that your shop!&lt;/span&gt;');
