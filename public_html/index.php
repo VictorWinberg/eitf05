@@ -51,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       <p style="font-size: 0.8em; color: DarkSlateGray">
         Don't have an account? <a href="sign-up.php">Sign Up</a>
       </p>
-      <p class="small" style="font-size: 0.8em; color:red">
+      <p style="font-size: 0.8em; color:red">
        <?php if(isset($error)) echo $error; ?>
       </p>
     </form>
