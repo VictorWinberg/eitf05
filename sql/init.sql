@@ -14,6 +14,8 @@ CREATE TABLE Users (
 	address			VARCHAR(255) NOT NULL,
 	username		VARCHAR(255) NOT NULL UNIQUE,
 	hash			VARCHAR(255) NOT NULL,
+	attempts		INT DEFAULT 0,
+	attemptTime		TIMESTAMP DEFAULT NULL,
 	PRIMARY KEY		(id)
 );
 
