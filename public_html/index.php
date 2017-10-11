@@ -6,32 +6,52 @@ $title = 'Login - Fidget Express';
 
 if($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  $username = htmlspecialchars($_POST['username'], ENT_QUOTES);
-  $password = htmlspecialchars($_POST['password'], ENT_QUOTES);
-
+  $username = htmlspecialchars($_POST['username']);
+  $password = htmlspecialchars($_POST['password']);
   // Prepared statement
-  $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
+  if($stmt = $conn->prepare("SELECT * FROM users WHERE username = ?")) {
 
-  // Bind $username param as a string
-  $stmt->bind_param('s', $username);
+    // Bind $username param as a string
+    $stmt->bind_param('s', $username);
 
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $stmt->close();
+    if($stmt->execute()) {
 
-  $login_user = $result->fetch_assoc();
+      $result = $stmt->get_result();
+      $stmt->close();
 
-  if(password_verify($password, $login_user['hash'])) {
-    session_regenerate_id();
-    unset($login_user['hash']);
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    $_SESSION['login_user'] = $login_user;
-    $_SESSION['logged_in'] = TRUE;
-    $_SESSION['shopping_cart'] = array();
-
-    header("location: store.php");
-  } else {
-    $error = "Ditt användarnamn och/eller lösenord är felaktigt";
+      $login_user = $result->fetch_assoc();
+      $username = $_SESSION['login_user']['username'];
+      $attempts = $_SESSION['login_user']['attempts'];
+      $days = $_SESSION['login_user']['attemptTime'];
+      if($days!=NULL) {
+        $now=time();
+        echo $now;
+        //$time_array=preg_split("/:/", $now);
+      }
+      if ($attempts<5 && $days==NULL) {
+        if(password_verify($password, $login_user['hash'])) {
+          session_regenerate_id();
+          unset($login_user['hash']);
+          $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+          $_SESSION['login_user'] = $login_user;
+          $_SESSION['logged_in'] = TRUE;
+          $_SESSION['shopping_cart'] = array();
+          header("location: store.php");
+        } else {
+          $attempts = $attempts + 1;
+          $statement = $conn->prepare("UPDATE Users SET attempts=? WHERE username =?");
+          $statement->bind_param("is", $attempts, $username);
+          $statement->execute();
+          $error = "Ditt användarnamn och/eller lösenord är felaktigt";
+        }
+      } else {
+        $statement = $conn->prepare("UPDATE Users SET attempts=0 WHERE username =?");
+        $statement->execute();
+        $statement = $conn->prepare("UPDATE Users SET attemptTime=now() WHERE username =?");
+        $statement->close();
+        $error = "Too many tries, your account has been locked for an hour"
+      }
+    }
   }
 }
 ?>
