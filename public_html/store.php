@@ -44,9 +44,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['csrf_token']) && iss
 		<form method="post">
 			<table>
 				<tr>
-					<th>Namn</th>
-					<th>Pris</th>
-					<th>Antal</th>
+					<th>Name</th>
+					<th>Price</th>
+					<th>Amount</th>
 				</tr>
 				<?php foreach($items as $item) { ?>
 					<tr>
@@ -57,7 +57,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['csrf_token']) && iss
 				<?php } ?>
 			</table>
 			<br/>
-			<button class="btn" type="submit" name="add">Lägg till i varukorgen</button>
+			<button class="btn" type="submit" name="add">Add to Shopping Cart</button>
 			<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 		</form>
 

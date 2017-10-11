@@ -40,16 +40,16 @@ $cart = getCart($conn);
 
 		<?php require_once('navigationBar.php'); ?>
 
-		<h1>Kundvagn</h1>
+		<h1>Shopping Cart</h1>
 
 		<?php if (count($cart)) { ?>
 
 			<table>
 				<tr>
-					<th>Namn</th>
-					<th>Á-pris</th>
-					<th>Antal</th>
-					<th>Totalt</th>
+					<th>Name</th>
+					<th>Price per piece</th>
+					<th>Amount</th>
+					<th>Total</th>
 					<th></th>
 				</tr>
 				<?php foreach($cart as $item) { ?>
@@ -61,10 +61,10 @@ $cart = getCart($conn);
 							<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
 							<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 							<td><?= $item['price'] * $item['quantity'] ?></td>
-							<td><button type="submit" /> Uppdatera </button> </td>
+							<td><button type="submit" /> Update </button> </td>
 						</form>
 						<form method="post">
-							<td><button type="submit" name="remove">Ta bort</button></td>
+							<td><button type="submit" name="remove">Remove</button></td>
 							<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
 							<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 						</form>
@@ -72,13 +72,13 @@ $cart = getCart($conn);
 				<?php } ?>
 			</table>
 			<p>
-				<b>Summa:</b> <?= $_SESSION["total_price"] ?>
+				<b>Total Sum:</b> <?= $_SESSION["total_price"] ?>
 			</p>
-			<button class="btn" onClick="return handlePayment()">Betala</button>
+			<button class="btn" onClick="return handlePayment()">Checkout</button>
 
 		<?php } else { ?>
 
-			<p>Inga produkter</p>
+			<p>No products</p>
 
 		<?php } ?>
 
