@@ -50,7 +50,7 @@ isset($_POST['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']) 
 
       <input type="text" name="subject" placeholder="Subject" maxlength="40"/>
       <br/><br />
-      <textarea name="review" placeholder="This webshop is great because..." rows="5" cols="80" id='comment'></textarea><br />
+      <textarea name="review" placeholder="This webshop is great because..." rows="5" cols="80"></textarea><br />
       <p><b>Author:</b> <?= $name ?>. <b>Date:</b> <?= date('Y-m-j') ?>.</p>
       <button class="btn" style="width: 250" type="submit">Submit</button>
       <br/><br />
