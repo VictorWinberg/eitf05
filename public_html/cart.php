@@ -57,11 +57,11 @@ $cart = getCart($conn);
 						<td><?= $item['name'] ?></td>
 						<td><?= $item['price'] ?></td>
 						<form method="post">
-							<td><input type="number" name="quantity" value="<?= $item['quantity'] ?>"></td>
+							<td><input type="number" min="0" name="quantity" value="<?= $item['quantity'] ?>"></td>
 							<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
 							<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
 							<td><?= $item['price'] * $item['quantity'] ?></td>
-							<td><button type="submit" /> Uppdatera </button> </td> 
+							<td><button type="submit" /> Uppdatera </button> </td>
 						</form>
 						<form method="post">
 							<td><button type="submit" name="remove">Ta bort</button></td>
