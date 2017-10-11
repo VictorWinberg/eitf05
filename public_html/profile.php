@@ -29,14 +29,14 @@ $orders = $conn->query("SELECT *
 
 		<table>
 			<tr>
-				<th><h1>Uppgifter</h1></th>
+				<th><h1>Credentials</h1></th>
 			</tr>
 			<tr>
-				<th>Användarnamn</th>
+				<th>Username</th>
 				<td><?= $LOGIN_USER['username'] ?></td>
 			</tr>
 			<tr>
-				<th>Namn</th>
+				<th>Name</th>
 				<td><?= $LOGIN_USER['name'] ?></td>
 			</tr>
 			<tr>
@@ -45,15 +45,15 @@ $orders = $conn->query("SELECT *
 			</tr>
 		</table>
 
-		<h1>Ordrar</h1>
+		<h1>Orders</h1>
 
 		<?php if (mysqli_num_rows($orders)) { ?>
 
 			<table>
 				<tr>
-					<th>Namn</th>
-					<th>Pris</th>
-					<th>Beställd</th>
+					<th>Name</th>
+					<th>Price</th>
+					<th>Ordered</th>
 				</tr>
 				<?php foreach($orders as $order) { ?>
 					<tr>
@@ -66,7 +66,7 @@ $orders = $conn->query("SELECT *
 
 		<?php } else { ?>
 
-			<p>Inga ordrar</p>
+			<p>No previous orders</p>
 
 		<?php } ?>
 

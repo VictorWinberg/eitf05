@@ -54,19 +54,19 @@ if (isset($_POST["pay"]) && isset($_SESSION['csrf_token']) && isset($_POST['csrf
 
     	<?php if (count($cart) == 0) { ?>
 
-		    <h1> Betalning </h1>
-            <h4> Var god och ange dina kreditkortsuppgifter. </h4>
-            <h4> För att se en sammanfattning på dina varor, var god klicka på "Kundvagn". </h4>
+		    <h1> Payment </h1>
+            <h4> Please enter your credit card details </h4>
+            <h4> To see a summary of all selected items, press Shopping Cart above </h4>
 
             <form method="post">
-                <h2> Kortnummer: </h2>
+                <h2> Card number: </h2>
                 <input type="text">
-                <h4> Datum/månad </h4>
+                <h4> Month/Year </h4>
                 <input type="text"> <input type="text">
                 <p>
                 	<?php echo "Att betala: <b>", $_SESSION["total_price"], "</b> kr <t>"; ?>
                 </p>
-                <button class="btn" name="pay">Utför betalning</button>
+                <button class="btn" name="pay">Perform Payment</button>
                 <p class="error">
                 	<?= $error ? "Din betalning lyckades ej. Var god försök igen!" : ""; ?>
                 </p>
@@ -75,14 +75,14 @@ if (isset($_POST["pay"]) && isset($_SESSION['csrf_token']) && isset($_POST['csrf
 
         <?php } else { ?>
 
-			<h1>Bekräftelse</h1>
+			<h1>Confirmation</h1>
 
 			<table>
 				<tr>
-					<th>Namn</th>
-					<th>Á-pris</th>
-					<th>Antal</th>
-					<th>Totalt</th>
+					<th>Name</th>
+					<th>Price per piece</th>
+					<th>Amount</th>
+					<th>Total</th>
 				</tr>
 				<?php foreach($cart as $item) { ?>
 					<tr>
@@ -94,10 +94,10 @@ if (isset($_POST["pay"]) && isset($_SESSION['csrf_token']) && isset($_POST['csrf
 				<?php } ?>
 			</table>
 			<p>
-				<b>Summa:</b> <?= $_SESSION["total_price"] ?>
+				<b>Total Sum:</b> <?= $_SESSION["total_price"] ?>
 			</p>
 			<p>
-				Tack för att du handlar med Fidget Express :-)
+				Thank you for shopping with fidget express!
 			</p>
 
 			<?php updateTotalPrice($conn); ?>
