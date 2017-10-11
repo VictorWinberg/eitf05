@@ -13,22 +13,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Bind $username param as a string
     $stmt->bind_param('s', $username);
-
+    // if username exist execute is true
     if($stmt->execute()) {
 
       $result = $stmt->get_result();
       $stmt->close();
 
       $login_user = $result->fetch_assoc();
-      $username = $_SESSION['login_user']['username'];
-      $attempts = $_SESSION['login_user']['attempts'];
-      $days = $_SESSION['login_user']['attemptTime'];
-      if($days!=NULL) {
-        $now=time();
-        echo $now;
-        //$time_array=preg_split("/:/", $now);
+      $username = $login_user['username'];
+      $attempts = $login_user['attempts'];
+      $date = $login_user['attemptTime'];
+      if($date!=NULL) {
+        date_default_timezone_set("GMT");
+        $milliToday=getdate()[0];
+        $milliPast = strtotime($date);
+        $dif=$milliToday-$milliPast;
+        if($dif<1800) {
+          //still less than an hour
+          $error="Your account is locked, try again at a later time (max 30 min)";
+        } else {
+          //an hour has passed
+          $statement = $conn->prepare("UPDATE Users SET attemptTime=NULL WHERE username = ?");
+          $statement->bind_param("s", $username);
+          $statement->execute();
+          $statement->close();
+          $date=NULL;
+        }
       }
-      if ($attempts<5 && $days==NULL) {
+
+      // check if user has tried more than 5 times and if days is null
+      if ($attempts<5 && $date==NULL) {
+        //password for user was correct
         if(password_verify($password, $login_user['hash'])) {
           session_regenerate_id();
           unset($login_user['hash']);
@@ -36,20 +51,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
           $_SESSION['login_user'] = $login_user;
           $_SESSION['logged_in'] = TRUE;
           $_SESSION['shopping_cart'] = array();
+
+          $statement = $conn->prepare("UPDATE Users SET attempts=0 WHERE username = ?");
+          $statement->bind_param("s", $username);
+          $statement->execute();
+          $statement->close();
           header("location: store.php");
+        //password for user was incorrect
         } else {
+          //increase attempts in db
           $attempts = $attempts + 1;
-          $statement = $conn->prepare("UPDATE Users SET attempts=? WHERE username =?");
+          $statement = $conn->prepare("UPDATE Users SET attempts=? WHERE username = ?");
           $statement->bind_param("is", $attempts, $username);
           $statement->execute();
-          $error = "Ditt användarnamn och/eller lösenord är felaktigt";
+          $statement->close();
+          $error = "Ditt användarnamn och/eller lösenord är felaktigt attempt: ".$attempts;
         }
-      } else {
-        $statement = $conn->prepare("UPDATE Users SET attempts=0 WHERE username =?");
-        $statement->execute();
-        $statement = $conn->prepare("UPDATE Users SET attemptTime=now() WHERE username =?");
-        $statement->close();
-        $error = "Too many tries, your account has been locked for an hour"
+      //user has tried more than 5 times, set attempts to zero but timestamp=now()
+    } else {
+        if($date==NULL) {
+          //set attempts to zero
+          $statement = $conn->prepare("UPDATE Users SET attempts=0 WHERE username = ?");
+          $statement->bind_param("s", $username);
+          $statement->execute();
+          //set attemptTime=now()
+          $statement = $conn->prepare("UPDATE Users SET attemptTime=now() WHERE username = ?");
+          $statement->bind_param("s", $username);
+          $statement->execute();
+          $statement->close();
+
+          $error = "Too many tries, your account has been locked for an hour";
+        }
       }
     }
   }
@@ -71,7 +103,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
       <p style="font-size: 0.8em; color: DarkSlateGray">
         Don't have an account? <a href="sign-up.php">Sign Up</a>
       </p>
-      <p style="font-size: 0.8em; color:red">
+      <p class="small" style="font-size: 0.8em; color:red">
        <?php if(isset($error)) echo $error; ?>
       </p>
     </form>
