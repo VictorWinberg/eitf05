@@ -65,7 +65,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
           $statement->bind_param("is", $attempts, $username);
           $statement->execute();
           $statement->close();
-          $error = "Ditt användarnamn och/eller lösenord är felaktigt attempt: ".$attempts;
+          $error = "The username or password inserted is incorrect, attempt: ".$attempts;
         }
       //user has tried more than 5 times, set attempts to zero but timestamp=now()
     } else {

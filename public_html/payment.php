@@ -64,11 +64,11 @@ if (isset($_POST["pay"]) && isset($_SESSION['csrf_token']) && isset($_POST['csrf
                 <h4> Month/Year </h4>
                 <input type="text"> <input type="text">
                 <p>
-                	<?php echo "Att betala: <b>", $_SESSION["total_price"], "</b> kr <t>"; ?>
+                	<?php echo "Total sum of purchase: <b>", $_SESSION["total_price"], "</b> SEK <t>"; ?>
                 </p>
                 <button class="btn" name="pay">Perform Payment</button>
                 <p class="error">
-                	<?= $error ? "Din betalning lyckades ej. Var god försök igen!" : ""; ?>
+                	<?= $error ? "Your payment did not succeed, please try again" : ""; ?>
                 </p>
 		<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
             </form>

@@ -55,12 +55,12 @@ $cart = getCart($conn);
 				<?php foreach($cart as $item) { ?>
 					<tr>
 						<td><?= $item['name'] ?></td>
-						<td><?= $item['price'] ?></td>
+						<td><?= $item['price'] ?> SEK</td>
 						<form method="post">
 							<td><input type="number" min="0" name="quantity" value="<?= $item['quantity'] ?>"></td>
 							<input type="hidden" name="itemId" value="<?= $item['id'] ?>">
 							<input type="hidden" name="csrf_token" value="<?= $_SESSION['csrf_token'] ?>">
-							<td><?= $item['price'] * $item['quantity'] ?></td>
+							<td><?= $item['price'] * $item['quantity'] ?> SEK</td>
 							<td><button type="submit" /> Update </button> </td>
 						</form>
 						<form method="post">
@@ -72,7 +72,7 @@ $cart = getCart($conn);
 				<?php } ?>
 			</table>
 			<p>
-				<b>Total Sum:</b> <?= $_SESSION["total_price"] ?>
+				<b>Total Sum:</b> <?= $_SESSION["total_price"] ?> SEK
 			</p>
 			<button class="btn" onClick="return handlePayment()">Checkout</button>
 
