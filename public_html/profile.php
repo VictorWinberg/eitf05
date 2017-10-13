@@ -58,7 +58,7 @@ $orders = $conn->query("SELECT *
 				<?php foreach($orders as $order) { ?>
 					<tr>
 						<td><?= $order['name'] ?></td>
-						<td><?= $order['price'] ?></td>
+						<td><?= $order['price'] ?> SEK</td>
 						<td><?= $order['timePlaced'] ?></td>
 					</tr>
 				<?php } ?>

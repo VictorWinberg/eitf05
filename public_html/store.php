@@ -51,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['csrf_token']) && iss
 				<?php foreach($items as $item) { ?>
 					<tr>
 						<td><?= $item['name'] ?></td>
-						<td><?= $item['price'] ?></td>
+						<td><?= $item['price'] ?> SEK</td>
 						<td><input type="number" min="0" name="itemIds[<?= $item['id'] ?>]" value=0></td>
 					</tr>
 				<?php } ?>

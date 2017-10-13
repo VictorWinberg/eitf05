@@ -7,7 +7,7 @@ if (!isset($_SESSION['csrf_token'])) {
 require 'connect.php';
 $title = 'Sign Up - Fidget Express';
 
-if($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_SESSION['csrf_token']) && isset($_POST['csrf_token']) && $_SESSION['csrf_token'] == $_POST['csrf_token']) {
+if($_SERVER["REQUEST_METHOD"] == "POST") {
   $name = htmlspecialchars($_POST['name'], ENT_QUOTES);
   $address = htmlspecialchars($_POST['address'], ENT_QUOTES);
   $username = htmlspecialchars($_POST['username'], ENT_QUOTES);
@@ -35,6 +35,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"  && isset($_SESSION['csrf_token']) && is
             $_SESSION['login_user'] = $login_user;
             $_SESSION['logged_in'] = TRUE;
             $_SESSION['shopping_cart'] = array();
+            // set sessionID and csrf token
+            session_regenerate_id();
+            $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
             header("location: store.php");
           } else {
             $error="unable to execute mysqli query";

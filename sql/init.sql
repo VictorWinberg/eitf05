@@ -56,7 +56,7 @@ VALUES ('Daniel Tovesson', 'Stora gatan 1, 12345 Lund', 'daniel', '$2y$10$CHbI37
 INSERT INTO Items (name, price)
 VALUES ('Fidget spinner', 0.90),
        ('Fidget spinner edition', 1999.9),
-       ('Mjölk', 10.79);
+       ('Milk', 10.79);
 
 INSERT INTO Orders (timePlaced, userId, itemId)
 VALUES ('2017-08-02 10:11:22', 1, 2),
