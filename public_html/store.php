@@ -39,7 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset($_SESSION['csrf_token']) && iss
 
 		<?php require_once('navigationBar.php'); ?>
 
-		<h1>Produkter</h1>
+		<h1>Products</h1>
 
 		<form method="post">
 			<table>
