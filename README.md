@@ -1,5 +1,7 @@
 # eitf05
-EITF05 Webbsäkerhet - `Web Shop Under Attack`
+Web Security | Computer Science
+
+Project: Web Shop Under Attack
 
 ### Set up ssl connection
 - Copy and overide config/httpd.conf to /PATH/TO/MAMP/conf/apache
